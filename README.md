@@ -31,10 +31,12 @@ servis
 model
 ----
 2 сущьности:
+user_role: 
+	user_id,role
 user:
-	id,role,
+	id,name,vote(id_restoran),enable
 restoran:
-	id, name
+	id, name,
 menu:
 	id,name,price
 
