@@ -29,7 +29,7 @@ servis
 желательно test
 model
 ----
-2 сущьности:
+4 сущности:
 user_role: 
 	user_id,role
 user:
@@ -37,7 +37,7 @@ user:
 vote:
     id,user_id,restoran_id,registered
 restoran:
-	id, name,
+	id, name,sum_vote
 menu:
 	id,restoran_id,name,price,enable,registered
 
