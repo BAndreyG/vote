@@ -24,7 +24,6 @@ P.P.S .: Предположим, что ваш API будет использоваться разработчиком внешнего ин
 -------------
 в проекте папки: 
 webapp
-re
 spring
 servis
 желательно test
@@ -34,11 +33,13 @@ model
 user_role: 
 	user_id,role
 user:
-	id,name,vote(id_restoran),enable
+	id,name,password,vote_id,enable,
+vote:
+    id,user_id,restoran_id,registered
 restoran:
 	id, name,
 menu:
-	id,name,price
+	id,restoran_id,name,price,enable,registered
 
 ----
 BD -HSQLDB
