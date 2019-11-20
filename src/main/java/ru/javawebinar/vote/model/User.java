@@ -5,9 +5,9 @@ import org.hibernate.annotations.BatchSize;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Date;
+//import java.sql.Date;
 import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table (name = "users") //,uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "users_unique_email_idx")})
@@ -44,7 +44,7 @@ public class User extends AbstractNamedEntity{
     }
 
     public User(Integer id,String name, String password,Date registered,Role role,Role... roles){
-        this(id,name,password,registered,true,new Date(), EnumSet.of(role, roles));
+        this(id,name,password,registered,true, EnumSet.of(role, roles), new Date());
     }
 
     public User(@Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, Date vote) {
