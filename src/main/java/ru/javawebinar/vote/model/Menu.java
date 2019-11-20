@@ -10,7 +10,7 @@ import java.util.Date;
 public class Menu extends AbstractNamedEntity {
     @Column(name = "price", nullable = false)
     @NotNull
-    private Integer price;
+    private Double price;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
     private boolean enabled = true;
@@ -19,8 +19,19 @@ public class Menu extends AbstractNamedEntity {
     @NotNull
     private Date registered;
 
-    @CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "restoran_id"))
-    @Column(name = "restoran_id")
+    @CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "name")
     @ElementCollection(fetch = FetchType.EAGER)
     private Integer restoran_id;
+
+    public Menu(){}
+
+    public Menu(Integer id,String name,Double price,Integer restoran_id){
+        this.id=id;
+        this.name=name;
+        this.price=price;
+        this.enabled=true;
+        this.registered=new Date();
+        this.restoran_id=restoran_id;
+    }
 }
