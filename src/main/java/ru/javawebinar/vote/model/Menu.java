@@ -22,16 +22,49 @@ public class Menu extends AbstractNamedEntity {
     @CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "name")
     @ElementCollection(fetch = FetchType.EAGER)
-    private Integer restoran_id;
+    private String restoran;
 
     public Menu(){}
 
-    public Menu(Integer id,String name,Double price,Integer restoran_id){
+
+    public Menu(Integer id,String name,Double price,String restoran){
         this.id=id;
         this.name=name;
         this.price=price;
         this.enabled=true;
         this.registered=new Date();
-        this.restoran_id=restoran_id;
+        this.restoran=restoran;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Date getRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(Date registered) {
+        this.registered = registered;
+    }
+
+    public String getRestoran_id() {
+        return restoran;
+    }
+
+    public void setRestoran_id(String restoran_id) {
+        this.restoran = restoran_id;
     }
 }
