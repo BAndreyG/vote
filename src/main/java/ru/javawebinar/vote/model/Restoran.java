@@ -13,10 +13,6 @@ public class Restoran extends AbstractNamedEntity {
     public Restoran() {
     }
 
-    public Restoran(Integer id) {
-        this.id = id;
-    }
-
     public Restoran(Integer id, String name) {
         this.id = id;
         this.name = name;
