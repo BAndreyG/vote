@@ -28,12 +28,13 @@ spring
 servis
 желательно test
 model
+controller
 ----
 4 сущности:
 user_role: 
 	user_id,role
 user:
-	id,name,password,vote_id,enable,
+	id,name,email,password,vote_id,enable,
 vote:
     id,user_id,restoran_id,registered
 restoran:
