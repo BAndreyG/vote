@@ -5,14 +5,15 @@ import org.hibernate.annotations.BatchSize;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.EnumSet;
-import java.util.*;
+import java.util.Set;
 
 @Entity
-@Table (name = "users") //,uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "users_unique_email_idx")})
-public class User extends AbstractNamedEntity{
+@Table(name = "users") //,uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "users_unique_email_idx")})
+public class User extends AbstractNamedEntity {
 
-    @Column (name="password",nullable = false)
+    @Column(name="password",nullable = false)
     @Size(min=8,max=250)
     private String password;
 
