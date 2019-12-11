@@ -17,7 +17,7 @@ public class User extends AbstractNamedEntity {
     @Size(min=8,max=250)
     private String password;
 
-    @Column(name = "registered",nullable = false,columnDefinition = "timestamp default now()")
+    @Column(name = "registered",nullable = false,columnDefinition = "timestamp default now()", insertable = false, updatable =false)
     @NotNull
     private Date registered;
 
@@ -33,7 +33,7 @@ public class User extends AbstractNamedEntity {
 
     @CollectionTable(name = "votes",joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "registered")
-    @ElementCollection(fetch = FetchType.EAGER)
+    //@ElementCollection(fetch = FetchType.EAGER)
     @BatchSize(size = 200)
     private Date vote;
 

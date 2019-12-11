@@ -6,10 +6,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @MappedSuperclass
-public abstract class AbstractNamedEntity  extends AbstractBaseEntity {
+public abstract class AbstractNamedEntity extends AbstractBaseEntity {
+
     @NotBlank
     @Size(min = 2, max = 100)
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, insertable = false, updatable =false)
     protected String name;
 
     protected AbstractNamedEntity() {
