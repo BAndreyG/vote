@@ -3,12 +3,20 @@ package ru.javawebinar.vote.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.javawebinar.vote.model.User;
 
+import java.util.List;
+
 //@Transactional(readOnly = true)
 public interface CrudUserRepository extends JpaRepository<User,Integer> {
 
     public int deleteById(int id);
 
     public User findById(int id);
+
+    User get(int id);
+
+    List<User> getAll();
+
+    User getByEmail(String email);
 
     /*@Transactional
     @Modifying

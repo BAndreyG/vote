@@ -3,6 +3,8 @@ package ru.javawebinar.vote.model;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -12,6 +14,12 @@ import java.util.Set;
 @Entity
 @Table(name = "users") //,uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "users_unique_email_idx")})
 public class User extends AbstractNamedEntity {
+
+    @Column(name = "email", nullable = false, unique = true)
+    @Email
+    @NotBlank
+    @Size(max = 100)
+    private String email;
 
     @Column(name="password",nullable = false)
     @Size(min=8,max=250)
@@ -40,11 +48,11 @@ public class User extends AbstractNamedEntity {
     public User(){}
 
     public User( User u){
-        this(u.getId(), u.getName(),u.getPassword(), u.getRegistered(), u.isEnabled(), u.getRoles(),u.getVote());
+        this(u.getId(), u.getName(),u.getEmail(),u.getPassword(), u.getRegistered(), u.isEnabled(), u.getRoles(),u.getVote());
     }
 
-    public User(Integer id,String name, String password,Date registered,Role role,Role... roles){
-        this(id,name,password,registered,true, EnumSet.of(role, roles), new Date());
+    public User(Integer id,String name,String email, String password,Date registered,Role role,Role... roles){
+        this(id,name,email,password,registered,true, EnumSet.of(role, roles), new Date());
     }
 
     public User(@Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, Date vote) {
@@ -55,13 +63,22 @@ public class User extends AbstractNamedEntity {
         this.vote = vote;
     }
 
-    public User(Integer id, String name, @Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, Date vote) {
+    public User(Integer id, String name, String email,@Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, Date vote) {
         super(id, name);
+        this.email=email;
         this.password = password;
         this.registered = registered;
         this.enabled = enabled;
         this.roles = roles;
         this.vote = vote;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
