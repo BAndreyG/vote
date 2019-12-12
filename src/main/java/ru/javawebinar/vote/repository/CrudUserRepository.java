@@ -12,9 +12,7 @@ public interface CrudUserRepository extends JpaRepository<User,Integer> {
 
     public User findById(int id);
 
-    User get(int id);
-
-    List<User> getAll();
+    List<User> findAllBy();
 
     User getByEmail(String email);
 
