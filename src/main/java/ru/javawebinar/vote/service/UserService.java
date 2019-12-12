@@ -7,16 +7,17 @@ import org.springframework.util.Assert;
 import ru.javawebinar.vote.AuthorizedUser;
 import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.repository.CrudUserRepository;
+import ru.javawebinar.vote.repository.DataJpaUserRepository;
 
 import java.util.List;
 
 @Service
 public class UserService {
 
-    private final CrudUserRepository repository;
+    private final DataJpaUserRepository repository;
 
     @Autowired
-    public UserService(CrudUserRepository repository) {
+    public UserService(DataJpaUserRepository repository) {
         this.repository = repository;
     }
 
@@ -26,7 +27,7 @@ public class UserService {
     }
 
     public void delete(int id) {
-        repository.deleteById(id);
+        repository.delete(id);
     }
 
     public User get(int id) {
