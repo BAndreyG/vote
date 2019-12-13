@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 //@Controller
-@RequestMapping(value = "api/v1/users")
+@RequestMapping(value = "api/v1/users",produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -34,6 +34,18 @@ public class UserController {
         return service.get(id);
     }
 
+    @GetMapping("/123")
+    public String get() {
+        log.info("get {}", 123);
+        User u=new User();
+        u.setEmail("sdf@er.ru");
+        u.setPassword("pass");
+        //u.setRoles("ROLE_USER");
+        u.setName("sdf");
+        u.setId(123);
+        return "123321"+u.toString();
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
@@ -48,12 +60,7 @@ public class UserController {
         // assureIdConsistent(user, id);
         service.update(user);
     }
-   /* @GetMapping
-    public List<User> getAll() {
-        log.info("getAll");
-        return service.findAll();
-    }
-*/
+
 
 /*
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
