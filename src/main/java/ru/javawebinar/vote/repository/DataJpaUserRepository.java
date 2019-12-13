@@ -15,8 +15,8 @@ public class DataJpaUserRepository {
     private UserRepository repository;
 
     public List<User> getAll() {
-        return repository.findAll(SORT_NAME_EMAIL);
-    }
+        return repository.findAll();
+    }//(SORT_NAME_EMAIL)
 
     public boolean delete(int id) {
         return repository.deleteById(id) != 0;

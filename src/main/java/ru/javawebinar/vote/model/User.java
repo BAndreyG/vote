@@ -72,6 +72,15 @@ public class User extends AbstractNamedEntity {
         this.roles = roles;
         this.vote = vote;
     }
+    public User(Integer id, String name, String email,String password, boolean enabled, Set<Role> roles) {
+        this.id=id;
+        this.name=name;
+        this.email=email;
+        this.password = password;
+        this.enabled = enabled;
+        this.roles = roles;
+
+    }
 
     public String getEmail() {
         return email;
