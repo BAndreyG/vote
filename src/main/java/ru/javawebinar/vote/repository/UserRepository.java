@@ -6,7 +6,7 @@ import ru.javawebinar.vote.model.User;
 import java.util.List;
 
 //@Transactional(readOnly = true)
-public interface CrudUserRepository extends JpaRepository<User,Integer> {
+public interface UserRepository extends JpaRepository<User,Integer> {
 
     public int deleteById(int id);
 

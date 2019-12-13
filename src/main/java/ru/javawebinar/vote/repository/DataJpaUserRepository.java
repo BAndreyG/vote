@@ -12,7 +12,7 @@ import java.util.List;
 public class DataJpaUserRepository {
     private static final Sort SORT_NAME_EMAIL = Sort.by(Sort.Direction.ASC, "name", "email");
     @Autowired
-    private CrudUserRepository repository;
+    private UserRepository repository;
 
     public List<User> getAll() {
         return repository.findAll(SORT_NAME_EMAIL);
