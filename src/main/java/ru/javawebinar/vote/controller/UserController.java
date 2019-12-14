@@ -14,7 +14,6 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-//@Controller
 @RequestMapping(value = "api/v1/users",produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 

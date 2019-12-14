@@ -1,16 +1,17 @@
 package ru.javawebinar.vote.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.vote.model.User;
 
 import java.util.List;
 
-//@Transactional(readOnly = true)
+@Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User,Integer> {
 
-    public int deleteById(int id);
+    int deleteById(int id);
 
-    public User findById(int id);
+     User findById(int id);
 
     List<User> findAllBy();
 
