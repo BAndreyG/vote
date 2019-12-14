@@ -36,9 +36,10 @@ public class UserService {
         return repository.getAll();
     }
 
-    public void update(User user) {
+    public void update(User user,int id) {
+        User userUpdate=new User(get(id));
         Assert.notNull(user, "user must not be null");
-        repository.save(user);
+        repository.save(userUpdate);
     }
 
     public User getByEmail(String email) {
