@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class VoteApplication {
 
 	public static void main(String[] args) {
-        try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
+        /*try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             UserController userController = appCtx.getBean(UserController.class);
             System.out.println(userController.getAll());
@@ -23,7 +23,7 @@ public class VoteApplication {
 
             RestotanController  controller=appCtx.getBean(RestotanController.class);
             System.out.println(controller.getAll());
-        }
+        }*/
 		SpringApplication.run(VoteApplication.class, args);
 	}
 

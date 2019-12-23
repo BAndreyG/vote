@@ -1,29 +1,57 @@
 package ru.javawebinar.vote.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "restorans")
-public class Restoran extends AbstractNamedEntity {
+@ToString(of={"id","registered"})
+@EqualsAndHashCode(of={"id"})
+public class Restoran {
+
+    public static final int START_SEQ = 100000;
+    @Id
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "sum_vote")
-    private Integer sum_vote;
+    private int sum_vote;
 
     public Restoran() {
     }
 
-    public Restoran(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-        sum_vote = 0;
+    public Restoran(String name){
+        this.name=name;
+        this.sum_vote=0;
     }
 
-    public Integer getSum_vote() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSum_vote() {
         return sum_vote;
     }
 
-    public void setSum_vote(Integer sum_vote) {
+    public void setSum_vote(int sum_vote) {
         this.sum_vote = sum_vote;
     }
 }
