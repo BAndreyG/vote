@@ -30,7 +30,7 @@ public class RestotanController {
     }
 
     @GetMapping("/{id}")
-    public Restoran get(@PathVariable int id) {
+    public Restoran get(@PathVariable Long id) {
         log.info("get {}", id);
         return service.get(id);
     }
