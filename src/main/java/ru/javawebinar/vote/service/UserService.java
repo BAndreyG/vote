@@ -5,17 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.javawebinar.vote.model.User;
-import ru.javawebinar.vote.repository.DataJpaUserRepository;
+import ru.javawebinar.vote.repository.UserRepositoryImpl;
 
 import java.util.List;
 
 @Service
 public class UserService {
 
-    private final DataJpaUserRepository repository;
+    private final UserRepositoryImpl repository;
 
     @Autowired
-    public UserService(DataJpaUserRepository repository) {
+    public UserService(UserRepositoryImpl repository) {
         this.repository = repository;
     }
 

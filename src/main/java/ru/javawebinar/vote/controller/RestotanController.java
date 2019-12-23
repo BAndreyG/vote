@@ -3,10 +3,8 @@ package ru.javawebinar.vote.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.vote.model.Restoran;
 import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.service.RestoranService;
@@ -35,5 +33,11 @@ public class RestotanController {
     public Restoran get(@PathVariable int id) {
         log.info("get {}", id);
         return service.get(id);
+    }
+    @PostMapping
+    public Restoran create(@RequestBody Restoran restoran){
+        //Restoran created=service.create(restoran);
+        return service.create(restoran);//ResponseEntity.created().body(created);
+
     }
 }
