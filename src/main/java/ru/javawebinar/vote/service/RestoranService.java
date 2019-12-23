@@ -21,7 +21,7 @@ public class RestoranService {
         return repository.findAll();
     }
 
-    public Restoran get(Long id) {
+    public Restoran get(int id) {
         return repository.getById(id);
     }
 
