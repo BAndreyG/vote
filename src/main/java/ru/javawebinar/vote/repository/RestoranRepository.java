@@ -19,4 +19,8 @@ public class RestoranRepository {
     public Restoran get(int id) {
         return repository.findById(id);
     }
+
+    public Restoran create(Restoran restoran) {
+        return repository.save(restoran);
+    }
 }
