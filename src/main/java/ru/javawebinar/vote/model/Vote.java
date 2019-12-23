@@ -24,13 +24,13 @@ public class Vote extends AbstractBaseEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private String restoran;
 */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restoran_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull

@@ -2,6 +2,7 @@ package ru.javawebinar.vote.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ public class RestotanController {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    @Autowired
     private RestoranService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,7 +32,7 @@ public class RestotanController {
     }
 
     @GetMapping("/{id}")
-    public Restoran get(@PathVariable Long id) {
+    public Restoran get(@PathVariable int id) {
         log.info("get {}", id);
         return service.get(id);
     }
