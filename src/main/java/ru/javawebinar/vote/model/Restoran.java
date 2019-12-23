@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "restorans")
@@ -22,6 +23,10 @@ public class Restoran {
 
     @Column(name = "sum_vote")
     private int sum_vote;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restoran")
+    protected List<Menu> menus;
+
 
     public Restoran() {
     }

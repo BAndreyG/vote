@@ -1,6 +1,9 @@
 package ru.javawebinar.vote.model;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -23,22 +26,24 @@ public class Menu extends AbstractNamedEntity {
     @NotNull
     private Date registered;
 
-    @CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "name")
-    //@OneToMany(fetch = FetchType.EAGER)
-    private String restoran;
-
     public Menu(){}
 
+    @OneToMany(fetch = FetchType.LAZY)
+    //@CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "id"))
+    @JoinColumn(name = "restoran_id",nullable = false)
+    //@Column(name = "sum_vote")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
+    private Restoran restoran;
 
-    public Menu(Integer id,String name,Double price,String restoran){
+
+    public Menu(Integer id,String name,Double price){
         super(id, name);/*
         this.id=id;
         this.name=name;*/
         this.price=price;
         this.enabled=true;
         this.registered=new Date();
-        this.restoran=restoran;
     }
 
     public Double getPrice() {
@@ -65,11 +70,11 @@ public class Menu extends AbstractNamedEntity {
         this.registered = registered;
     }
 
-    public String getRestoran_id() {
+    public Restoran getRestoran_id() {
         return restoran;
     }
 
-    public void setRestoran_id(String restoran_id) {
-        this.restoran = restoran_id;
+    public void setRestoran_id(Restoran restoran) {
+        this.restoran = restoran;
     }
 }
