@@ -1,6 +1,7 @@
 package ru.javawebinar.vote.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -26,16 +27,16 @@ public class Menu extends AbstractNamedEntity {
     @NotNull
     private Date registered;
 
-    public Menu(){}
-
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     //@CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "id"))
     @JoinColumn(name = "restoran_id",nullable = false)
     //@Column(name = "sum_vote")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
+    @JsonIgnore
     private Restoran restoran;
 
+    public Menu(){}
 
     public Menu(Integer id,String name,Double price){
         super(id, name);/*

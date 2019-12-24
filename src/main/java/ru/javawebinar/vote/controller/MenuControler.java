@@ -21,7 +21,7 @@ public class MenuControler {
     @Autowired
     private MenuService service;
 
-    @GetMapping()
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Menu> getAll() {
         log.info("getALL {}");
         return service.getAll();

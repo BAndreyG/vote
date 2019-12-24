@@ -1,5 +1,6 @@
 package ru.javawebinar.vote.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -25,7 +26,8 @@ public class Restoran {
     private int sum_vote;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restoran")
-    protected List<Menu> menus;
+    @JsonIgnore
+    private List<Menu> menus;
 
 
     public Restoran() {
