@@ -39,21 +39,6 @@ public class UserController {
         return service.get(id);
     }
 
-    /*@GetMapping("/123")
-    public String get() {
-        log.info("get {}", 123);
-        User u=new User();
-        u.setEmail("sdf@er.ru");
-        u.setId(123);
-        u.setRegistered(new Date());
-        u.setPassword("password");
-        //u.setRoles([Role.ROLE_USER]);
-        u.setName("sdfphgo");
-       // u.setId(100123);
-        service.create(u);
-        return "123321"+u.toString();
-    }*/
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
