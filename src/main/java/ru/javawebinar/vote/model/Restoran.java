@@ -11,13 +11,13 @@ import java.util.List;
 @Table(name = "restorans")
 @ToString(of={"id","registered"})
 @EqualsAndHashCode(of={"id"})
-public class Restoran {
+public class Restoran extends AbstractNamedEntity{
 
-    public static final int START_SEQ = 100000;
+   /* public static final int START_SEQ = 100000;
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-    private Long id;
+    private int id;*/
 
     @Column(name = "name")
     private String name;
@@ -33,17 +33,10 @@ public class Restoran {
     public Restoran() {
     }
 
-    public Restoran(String name){
+    public Restoran(String name, List<Menu> menus){
         this.name=name;
+        this.menus = menus;
         this.sum_vote=0;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

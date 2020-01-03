@@ -23,7 +23,7 @@ public class MenuControler {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Menu> getAll() {
-        log.info("getALL {}");
+        log.info("getALL {} , menu");
         return service.getAll();
     }
 
