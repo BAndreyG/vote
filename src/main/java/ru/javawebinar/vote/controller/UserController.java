@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
-        log.info("getALL {}");
+        log.info("getALL {} User");
         return service.getAll();
     }
 
@@ -39,7 +39,7 @@ public class UserController {
         return service.get(id);
     }
 
-    @GetMapping("/123")
+    /*@GetMapping("/123")
     public String get() {
         log.info("get {}", 123);
         User u=new User();
@@ -52,7 +52,7 @@ public class UserController {
        // u.setId(100123);
         service.create(u);
         return "123321"+u.toString();
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

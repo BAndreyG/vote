@@ -1,5 +1,7 @@
 package ru.javawebinar.vote.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javawebinar.vote.model.Restoran;
@@ -9,7 +11,7 @@ import java.util.List;
 
 @Service
 public class RestoranService {
-
+    protected final Logger log = LoggerFactory.getLogger(getClass());
     private final RestoranRepo repository;
 
     @Autowired
@@ -22,6 +24,7 @@ public class RestoranService {
     }
 
     public Restoran get(int id) {
+        log.info("get id =",id);
         return repository.getById(id);
     }
 

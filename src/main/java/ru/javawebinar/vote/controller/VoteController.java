@@ -14,7 +14,7 @@ import ru.javawebinar.vote.service.VoteService;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/v1/vote",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/v1/votes",produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 

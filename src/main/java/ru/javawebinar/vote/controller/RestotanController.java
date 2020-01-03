@@ -23,11 +23,7 @@ public class RestotanController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restoran> getAll() {
-        log.info("getAll");
-        if (service.getAll()==null) {
-            log.info("null");
-            return service.getAll();
-        }
+        log.info("getAll restoran");
         return service.getAll();
     }
 
@@ -40,6 +36,5 @@ public class RestotanController {
     public Restoran create(@RequestBody Restoran restoran){
         //Restoran created=service.create(restoran);
         return service.create(restoran);//ResponseEntity.created().body(created);
-
     }
 }
