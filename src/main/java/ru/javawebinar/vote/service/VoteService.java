@@ -24,4 +24,10 @@ public class VoteService {
     public Vote get(int id){
         return repo.getById(id);
     }
+
+    public void create(Vote vote) {
+    }
+
+    public void update(Vote vote) {
+    }
 }

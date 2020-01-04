@@ -10,6 +10,7 @@ import ru.javawebinar.vote.model.Restoran;
 import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.service.RestoranService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,8 +34,10 @@ public class RestotanController {
         return service.get(id);
     }
     @PostMapping
-    public Restoran create(@RequestBody Restoran restoran){
+    public ResponseEntity<String> createOrUpdate(@Valid Restoran restoran){
+        if (restoran.isNew()) service.create(restoran);
+        else service.update(restoran);
         //Restoran created=service.create(restoran);
-        return service.create(restoran);//ResponseEntity.created().body(created);
+        return ResponseEntity.ok().build();//ResponseEntity.created().body(created);
     }
 }
