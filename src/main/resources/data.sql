@@ -3,7 +3,7 @@ DELETE FROM menus;
 DELETE FROM users;
 DELETE FROM RESTORANS;
 DELETE FROM VOTES;
--- ALTER SEQUENCE global_seq RESTART WITH 100000;
+ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password) VALUES
   ('User', 'user@yandex.ru', 'password'),
@@ -24,7 +24,7 @@ VALUES ('Манка',10.5,'2015-05-30 10:00:00', 100004),
        ('Гречка',200,'2015-05-30 13:00:00', 100004),
        ('Ужин', 500,'2015-05-30 20:00:00',  100004),
        ('Завтрак', 500,'2015-05-31 10:00:00', 100004),
-       ('Обед', 1000,'2015-05-31 13:00:00',  100004),
+       ('Обед', 1000,'2015-05-31 13:00:00',  100003),
        ('Ужин', 510,'2015-05-31 20:00:00',  100004),
        ( 'Админ ланч', 510,'2015-06-01 14:00:00', 100003),
        ('Админ ужин', 1500,'2015-06-01 21:00:00',  100003);
