@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +22,8 @@ public class Restoran extends AbstractNamedEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     private int id;*/
 
+    @NotBlank
+    @Size(min = 2, max = 100)
     @Column(name = "name")
     private String name;
 

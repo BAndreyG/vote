@@ -4,13 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.javawebinar.vote.model.Menu;
+import ru.javawebinar.vote.TO.ResTo;
 import ru.javawebinar.vote.model.Restoran;
 import ru.javawebinar.vote.repository.RestoranRepo;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class RestoranService {
@@ -23,21 +22,16 @@ public class RestoranService {
     }
 
     public List<Restoran> getAll() {
-        List<Restoran> restoranList=repository.findAll().stream()
-                .forEach(restoran -> );
-        Map<String,List<Menu>> mapRes=new HashMap<>();
-
-        for (:
-             ) {
-
-        }
-
-        return
+        return repository.findAll();
     }
 
-    public Restoran get(int id) {
+    public ResTo get(int id) {
         log.info("get id =",id);
-        return repository.getById(id);
+        ResTo resTo=new ResTo(repository.getById(id));
+        resTo.setMenus(resTo.getMenus().stream()
+                .filter(menu -> menu.isEnabled())
+                .collect(Collectors.toSet()));
+        return resTo;
     }
 
     public void update(Restoran restoran){

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.javawebinar.vote.TO.ResTo;
 import ru.javawebinar.vote.model.Restoran;
 import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.service.RestoranService;
@@ -29,7 +30,7 @@ public class RestotanController {
     }
 
     @GetMapping("/{id}")
-    public Restoran get(@PathVariable int id) {
+    public ResTo get(@PathVariable int id) {
         log.info("get {}", id);
         return service.get(id);
     }
