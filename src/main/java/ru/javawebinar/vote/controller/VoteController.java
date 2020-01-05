@@ -3,7 +3,11 @@ package ru.javawebinar.vote.controller;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.javawebinar.vote.AuthorizedUser;
+import ru.javawebinar.vote.HasId;
+import ru.javawebinar.vote.TO.UserTo;
 import ru.javawebinar.vote.model.Restoran;
+import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.model.Vote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,19 +31,24 @@ public class VoteController {
     }
 
     @GetMapping
-    public List<Vote> getAll(){
+    public List<Restoran> getAll(){
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Vote get(@PathVariable int id){
+    public Restoran get(@PathVariable int id){
         return service.get(id);
     }
 
     @PostMapping()
-    public ResponseEntity<String> createOrUpdate(@Valid Vote vote){
+    public ResponseEntity<String> createOrUpdate(@Valid Restoran restoran){
+        int userId=SecurityUtil.authUserId();
+
+        UserTo u=AuthorizedUser.();
+        if ()
+        Vote vote=new Vote(AuthorizedUser.getId,restoran.getId());
         if (vote.isNew()) service.create(vote);
-        else service.update(vote);
+        else if (vote.getRegistered().after()new DateTime>)service.update(vote);
         return ResponseEntity.ok().build();
     }
 

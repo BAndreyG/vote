@@ -39,11 +39,15 @@ public class User extends AbstractNamedEntity {
     @BatchSize(size = 200)
     private Set<Role> roles;
 
-    @CollectionTable(name = "votes",joinColumns = @JoinColumn(name = "user_id"))
+    /*@CollectionTable(name = "votes",joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "registered")
     //@ElementCollection(fetch = FetchType.EAGER)
     @BatchSize(size = 200)
-    private Date vote;
+    private Date vote;*/
+
+    @CollectionTable(name = "votes",joinColumns = @JoinColumn(name = "user_id"))
+    @Column (name = "user_id")
+    private int vote;
 
     public User(){}
 
@@ -52,10 +56,10 @@ public class User extends AbstractNamedEntity {
     }
 
     public User(Integer id,String name,String email, String password,Date registered,Role role,Role... roles){
-        this(id,name,email,password,registered,true, EnumSet.of(role, roles), new Date());
+        this(id,name,email,password,registered,true, EnumSet.of(role, roles), 0);
     }
 
-    public User(@Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, Date vote) {
+    public User(@Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, int vote) {
         this.password = password;
         this.registered = registered;
         this.enabled = enabled;
@@ -63,7 +67,7 @@ public class User extends AbstractNamedEntity {
         this.vote = vote;
     }
 
-    public User(Integer id, String name, String email,@Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, Date vote) {
+    public User(Integer id, String name, String email,@Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, int vote) {
         super(id, name);
         this.email=email;
         this.password = password;
@@ -79,7 +83,9 @@ public class User extends AbstractNamedEntity {
         this.password = password;
         this.enabled = enabled;
         this.roles = roles;
+    }
 
+    public User(Integer integer, String name, String toLowerCase, String password, int vote_id, Role roleUser) {
     }
 
     public String getEmail() {
@@ -122,11 +128,11 @@ public class User extends AbstractNamedEntity {
         this.roles = roles;
     }
 
-    public Date getVote() {
+    public int getVote() {
         return vote;
     }
 
-    public void setVote(Date vote) {
+    public void setVote(int vote) {
         this.vote = vote;
     }
 }
