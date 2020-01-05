@@ -43,10 +43,10 @@ public class VoteController {
     @PostMapping()
     public ResponseEntity<String> createOrUpdate(@Valid Restoran restoran){
         int userId=SecurityUtil.authUserId();
-
-        UserTo u=AuthorizedUser.();
+        int voteId=SecurityUtil.get().getUserTo().getVote();
+        //у зарегано пользователя узнать наличие голоса , его дату, сравнитьс сегодняшней датой, если сегодня то сейчас не позже ли 11-00, если нет,то апдате голос
         if ()
-        Vote vote=new Vote(AuthorizedUser.getId,restoran.getId());
+        Vote vote=new Vote(SecurityUtil.authUserId(),restoran.getId());
         if (vote.isNew()) service.create(vote);
         else if (vote.getRegistered().after()new DateTime>)service.update(vote);
         return ResponseEntity.ok().build();
