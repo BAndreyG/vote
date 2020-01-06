@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RestoranRepo extends JpaRepository<Restoran,Integer> {
     Restoran getById(int id);
-    @Query("")
 }
