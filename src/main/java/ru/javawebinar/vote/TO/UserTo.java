@@ -1,6 +1,7 @@
 package ru.javawebinar.vote.TO;
 
 import org.hibernate.validator.constraints.Range;
+import ru.javawebinar.vote.model.Vote;
 import ru.javawebinar.vote.util.UserUtil;
 
 import javax.validation.constraints.Email;
@@ -25,13 +26,12 @@ public class UserTo extends BaseTo implements Serializable {
     @Size(min = 5, max = 32, message = "length must be between 5 and 32 characters")
     private String password;
 
-    @NotBlank
-    private int vote;
+    private Vote vote;
 
     public UserTo() {
     }
 
-    public UserTo(Integer id, String name, String email, String password,int vote) {
+    public UserTo(Integer id, String name, String email, String password,Vote vote) {
         super(id);
         this.name = name;
         this.email = email;
@@ -39,11 +39,11 @@ public class UserTo extends BaseTo implements Serializable {
         this.vote=vote;
     }
 
-    public int getVote() {
+    public Vote getVote() {
         return vote;
     }
 
-    public void setVote(int vote) {
+    public void setVote(Vote vote) {
         this.vote = vote;
     }
 
