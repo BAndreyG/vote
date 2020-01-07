@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.vote.model.Role;
 import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.service.UserService;
@@ -20,10 +19,8 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = UserController.REST_URL,produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/v1/users",produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
-
-    static final String REST_URL = "/api/v1/users";
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -50,19 +47,21 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
-        User created = service.create(user);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
+    public ResponseEntity<String> createOrUpdate(@Valid User user) {
+        if (user.isNew()) {
+            service.create(user);
+        }
+        else service.update(user, user.getId());
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /*@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody User user, @PathVariable int id) {
-        service.update(user, id);
-    }
+        log.info("update {} with id={}", user, id);
+        // assureIdConsistent(user, id);
+        service.update(user,id);
+    }*/
 
 
 /*
