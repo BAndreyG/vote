@@ -47,10 +47,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createOrUpdate(@Valid User user) { //, BindingResult result
-        /*if (result.hasErrors()) {
-            return ValidationUtil.getError(result);
-        }*/
+    public ResponseEntity<String> createOrUpdate(@Valid User user) {
         if (user.isNew()) {
             service.create(user);
         }
@@ -58,13 +55,13 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /*@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody User user, @PathVariable int id) {
         log.info("update {} with id={}", user, id);
         // assureIdConsistent(user, id);
         service.update(user,id);
-    }
+    }*/
 
 
 /*
