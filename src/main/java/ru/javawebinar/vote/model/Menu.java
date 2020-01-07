@@ -27,21 +27,20 @@ public class Menu extends AbstractNamedEntity {
     @NotNull
     private Date registered;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    //@CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "id"))
-    @JoinColumn(name = "restoran_id",nullable = false)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
+    //@OneToMany(cascade = CascadeType.ALL,mappedBy="menus",fetch = FetchType.LAZY)
+   // @CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "id"))
+   // @JoinColumn(name = "restoran_id")//,nullable = false
     //@Column(name = "sum_vote")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
+   // @NotNull
     @JsonIgnore
     private Restoran restoran;
 
     public Menu(){}
 
     public Menu(Integer id,String name,Double price){
-        super(id, name);/*
-        this.id=id;
-        this.name=name;*/
+        super(id, name);
         this.price=price;
         this.enabled=true;
         this.registered=new Date();

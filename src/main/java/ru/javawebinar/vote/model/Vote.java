@@ -25,9 +25,9 @@ public class Vote extends AbstractBaseEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private String restoran;
 */
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne(optional = false,mappedBy = "vote")//fetch = FetchType.EAGER
+   // @JoinColumn(name = "user_id", nullable = false)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private User user;
 

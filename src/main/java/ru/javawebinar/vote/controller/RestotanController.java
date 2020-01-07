@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.javawebinar.vote.TO.ResTo;
+import ru.javawebinar.vote.model.Menu;
 import ru.javawebinar.vote.model.Restoran;
-import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.service.RestoranService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/v1/restorans",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,7 +30,7 @@ public class RestotanController {
     }
 
     @GetMapping("/{id}")
-    public ResTo get(@PathVariable int id) {
+    public Set<Menu> get(@PathVariable int id) {
         log.info("get {}", id);
         return service.get(id);
     }
@@ -38,7 +38,6 @@ public class RestotanController {
     public ResponseEntity<String> createOrUpdate(@Valid Restoran restoran){
         if (restoran.isNew()) service.create(restoran);
         else service.update(restoran);
-        //Restoran created=service.create(restoran);
-        return ResponseEntity.ok().build();//ResponseEntity.created().body(created);
+        return ResponseEntity.ok().build();
     }
 }

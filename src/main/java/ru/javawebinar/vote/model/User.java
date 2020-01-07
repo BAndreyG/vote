@@ -45,9 +45,9 @@ public class User extends AbstractNamedEntity {
     @BatchSize(size = 200)
     private Date vote;*/
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(optional=false, cascade=CascadeType.ALL)//fetch = FetchType.EAGER
    // @CollectionTable(name = "votes",joinColumns = @JoinColumn(name = "user_id"))
-    @Column (name = "id")
+    @JoinColumn (name = "id")
     private Vote vote;
 
     public User(){}

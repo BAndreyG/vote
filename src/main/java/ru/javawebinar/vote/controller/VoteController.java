@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.vote.AuthorizedUser;
 import ru.javawebinar.vote.HasId;
 import ru.javawebinar.vote.TO.UserTo;
+import ru.javawebinar.vote.model.Menu;
 import ru.javawebinar.vote.model.Restoran;
 import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.model.Vote;
@@ -23,6 +24,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/v1/votes",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,17 +45,16 @@ public class VoteController {
     }
 
     @GetMapping("/{id}")
-    public Restoran get(@PathVariable int id){
+    public Set<Menu> get(@PathVariable int id){
         return service.get(id);
     }
 
-    @PostMapping(value ="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value ="/{id}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<String> createOrUpdate(@Valid Restoran restoran){
         int userId=SecurityUtil.authUserId();
         UserTo userTo=SecurityUtil.get().getUserTo();
         Vote vote=SecurityUtil.get().getUserTo().getVote();
-        //у зарегано пользователя узнать наличие голоса , его дату, сравнитьс сегодняшней датой, если сегодня то сейчас не позже ли 11-00, если нет,то апдате голос
         if (vote!=null){
             LocalDateTime voteTime=vote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
             if (voteTime.toLocalDate().compareTo(LocalDate.now())==0){
@@ -65,5 +66,14 @@ public class VoteController {
         else service.create(UserUtil.createNewFromTo(userTo),restoran);
         return ResponseEntity.ok().build();
     }
+
+/*
+    @PostMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public Restoran testRes(@Valid Restoran restoran){
+        log.info("testTes");
+        return service.getTest(restoran.getId());
+    }
+*/
 
 }
