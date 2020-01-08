@@ -28,8 +28,8 @@ public class RestoranService {
     }
 
     public Set<Menu> get(int id) {
-        log.info("get id =",id);
-        ResTo resTo=new ResTo(repository.getById(id));
+        log.info("get id =", id);
+        ResTo resTo = new ResTo(repository.getById(id));
         resTo.setMenus(resTo.getMenus().stream()
                 .filter(menu -> menu.isEnabled())
                 .collect(Collectors.toSet()));
@@ -37,9 +37,10 @@ public class RestoranService {
         return resTo.getMenus();
     }
 
-    public void update(Restoran restoran){
-        Restoran createRes=new Restoran(restoran);
+    public void update(Restoran restoran) {
+        Restoran createRes = new Restoran(restoran);
     }
+
     public Restoran create(Restoran restoran) {
         return repository.save(restoran);
     }
