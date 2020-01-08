@@ -1,7 +1,7 @@
 package ru.javawebinar.vote.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.javawebinar.vote.model.User;
@@ -15,12 +15,16 @@ public class UserService {
     private final UserRepo repository;
 
     @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
     public UserService(UserRepo repository) {
         this.repository = repository;
     }
 
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 
@@ -39,11 +43,8 @@ public class UserService {
     public void update(User user,int id) {
         User userUpdate=new User(get(id));
         Assert.notNull(user, "user must not be null");
+        user.setPassword(bCryptPasswordEncoder.encode(userUpdate.getPassword()));
         repository.save(userUpdate);
-    }
-
-    public User getByEmail(String email) {
-        return repository.getByEmail(email);
     }
 
 }
