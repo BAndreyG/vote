@@ -1,20 +1,21 @@
 package ru.javawebinar.vote.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
+import ru.javawebinar.vote.TO.ResTo;
 import ru.javawebinar.vote.model.Menu;
 import ru.javawebinar.vote.model.Restoran;
 import ru.javawebinar.vote.repository.RestoranRepo;
 
+import java.util.List;
 import java.util.Set;
-
-import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
+import java.util.stream.Collectors;
 
 @Service
 public class RestoranService {
-
+    protected final Logger log = LoggerFactory.getLogger(getClass());
     private final RestoranRepo repository;
 
     @Autowired
@@ -22,30 +23,25 @@ public class RestoranService {
         this.repository = repository;
     }
 
-    public Set<Menu> get(int id) {
-        if (repository.existsById(id)){
-            return checkNotFoundWithId(repository.getMenu(id),id);
-        }
-        else System.out.println("error");
-        return null;
-
+    public List<Restoran> getAll() {
+        return repository.findAll();
     }
 
-    @Transactional
-    public void update(Restoran restoran,int id) {
-        Assert.notNull(restoran, "restoran must not be null");
-        Restoran createdRestoran=new Restoran(repository.findById(id));
-        createdRestoran.setName(restoran.getName());
-        repository.save(new Restoran(createdRestoran));
+    public Set<Menu> get(int id) {
+        log.info("get id =", id);
+        ResTo resTo = new ResTo(repository.getById(id));
+        resTo.setMenus(resTo.getMenus().stream()
+                .filter(menu -> menu.isEnabled())
+                .collect(Collectors.toSet()));
+        System.out.println(resTo.getMenus());
+        return resTo.getMenus();
+    }
+
+    public void update(Restoran restoran) {
+        Restoran createRes = new Restoran(restoran);
     }
 
     public Restoran create(Restoran restoran) {
-        Assert.notNull(restoran, "restoran must not be null");
         return repository.save(restoran);
-    }
-
-    public void delete(int id) {
-        if (repository.existsById(id)){
-      repository.deleteById(id);}
     }
 }
