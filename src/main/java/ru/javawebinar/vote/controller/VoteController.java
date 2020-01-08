@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "api/v1/votes",produces = MediaType.APPLICATION_JSON_VALUE)
+//@RequestMapping(value = "api/v1/votes",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "votes",produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
