@@ -12,19 +12,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    @Bean
+   /* @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
-    }
+    }*/
 
-    @Override
+  /*  @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user")
                 .password("password") // Spring Security 5 requires specifying the password storage format
                 .roles("USER");
-    }
-
+    }*/
+/*
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf().disable()
@@ -34,12 +34,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/votes/**").permitAll()//hasRole("USER")
                 .antMatchers("api/v1/menus/*").permitAll()
                 .anyRequest().authenticated();
-                /*.and()
+                *//*.and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/votes").permitAll()
                 .and()
-                .logout().permitAll().logoutSuccessUrl("/login");*/
-    }
+                .logout().permitAll().logoutSuccessUrl("/login");*//*
+    }*/
 }
