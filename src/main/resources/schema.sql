@@ -42,7 +42,7 @@ CREATE TABLE menus
     price       VARCHAR                 NOT NULL,
     enabled     BOOLEAN   DEFAULT TRUE NOT NULL,
     registered  TIMESTAMP DEFAULT NOW()  NOT NULL,
-    restoran_id INTEGER                NOT NULL,
+    restoran_id INTEGER                ,
     FOREIGN KEY (restoran_id) REFERENCES RESTORANS (id)
 );
 

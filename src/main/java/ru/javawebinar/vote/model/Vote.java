@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -24,9 +25,9 @@ public class Vote extends AbstractBaseEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private String restoran;
 */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne(optional = false,mappedBy = "vote")//fetch = FetchType.EAGER
+   // @JoinColumn(name = "user_id", nullable = false)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private User user;
 
@@ -42,6 +43,13 @@ public class Vote extends AbstractBaseEntity {
         super(id);
         this.registered=registered;
     }
+
+    public Vote(@NotNull User user, @NotNull Restoran restoran) {
+        this.user = user;
+        this.restoran = restoran;
+        this.registered=new Date();
+    }
+
 
     public Date getRegistered() {
         return registered;
