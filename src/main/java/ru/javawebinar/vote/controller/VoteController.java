@@ -3,6 +3,7 @@ package ru.javawebinar.vote.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.vote.AuthorizedUser;
 import ru.javawebinar.vote.HasId;
@@ -28,6 +29,7 @@ import java.util.Set;
 
 @RestController
 //@RequestMapping(value = "api/v1/votes",produces = MediaType.APPLICATION_JSON_VALUE)
+@PreAuthorize("hasRole('ADMIN')|| hasRole('USER')")
 @RequestMapping(value = "votes",produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
