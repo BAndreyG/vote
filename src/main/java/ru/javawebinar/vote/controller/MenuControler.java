@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.vote.model.Menu;
-import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.service.MenuService;
-import ru.javawebinar.vote.service.UserService;
 
 import java.util.List;
 
