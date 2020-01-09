@@ -14,9 +14,9 @@ public class UserService {
 
     private final UserRepo repository;
 
-    @Autowired
+    /*@Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-
+*/
     @Autowired
     public UserService(UserRepo repository) {
         this.repository = repository;
@@ -24,7 +24,7 @@ public class UserService {
 
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 
@@ -43,7 +43,7 @@ public class UserService {
     public void update(User user,int id) {
         User userUpdate=new User(get(id));
         Assert.notNull(user, "user must not be null");
-        user.setPassword(bCryptPasswordEncoder.encode(userUpdate.getPassword()));
+      //  user.setPassword(bCryptPasswordEncoder.encode(userUpdate.getPassword()));
         repository.save(userUpdate);
     }
 
