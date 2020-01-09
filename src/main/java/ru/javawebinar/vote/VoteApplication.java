@@ -19,8 +19,6 @@ public class VoteApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(VoteApplication.class, args);
-		/*EntityManager em;
-		@Query("SELECT r FROM Restoran r WHERE r.id )*/
 	}
 
 }
