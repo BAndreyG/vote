@@ -43,7 +43,7 @@ CREATE TABLE menus
     enabled     BOOLEAN   DEFAULT TRUE NOT NULL,
     registered  TIMESTAMP DEFAULT NOW()  NOT NULL,
     restoran_id INTEGER                ,
-    FOREIGN KEY (restoran_id) REFERENCES RESTORANS (id)
+    FOREIGN KEY (restoran_id) REFERENCES RESTORANS (id) ON DELETE CASCADE
 );
 
 CREATE TABLE votes

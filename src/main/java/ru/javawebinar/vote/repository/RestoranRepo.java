@@ -13,6 +13,10 @@ import java.util.Set;
 public interface RestoranRepo extends JpaRepository<Restoran,Integer> {
     Restoran getById(int id);
 
-//    @Query("SELECT m FROM Menu m WHERE m.restoran_id=:id")
-//    public Set<Menu> getMenus(@Param("id")int id);
+    @Query("SELECT m FROM Menu m WHERE m.restoran_id=:id")
+    public Set<Menu> getMenu(@Param("id") int id);
+
+    @Query("UPDATE Restoran set sum_vote=sum_vote+1 WHERE id=:id ")
+    public void sumVoteIncrement(int id);
+
 }

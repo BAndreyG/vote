@@ -54,19 +54,18 @@ public class VoteController {
 
     @PostMapping(value ="/{id}")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<String> createOrUpdate(@Valid Restoran restoran){
+    public ResponseEntity<String> createOrUpdate(int id){
         int userId=SecurityUtil.authUserId();
         UserTo userTo=SecurityUtil.get().getUserTo();
         Vote vote=SecurityUtil.get().getUserTo().getVote();
         if (vote!=null){
-            LocalDateTime voteTime=vote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-            if (voteTime.toLocalDate().compareTo(LocalDate.now())==0){
-                if (LocalTime.now().isBefore(LocalTime.of(11,00)))service.update(vote);
+            if (vote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now())==0) {
+                if (LocalTime.now().isBefore(LocalTime.of(11,00)))service.update(vote,id);
             }
             log.info("Голосовать уже поздно");
             return ResponseEntity.badRequest().build();
         }
-        else service.create(UserUtil.createNewFromTo(userTo),restoran);
+        else service.create(UserUtil.createNewFromTo(userTo),id);
         return ResponseEntity.ok().build();
     }
 

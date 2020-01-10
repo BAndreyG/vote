@@ -12,6 +12,6 @@ import java.util.Set;
 public interface MenuRepo extends JpaRepository<Menu,Integer> {
     Menu findById(int id);
 
-    @Query("SELECT m FROM Menu m WHERE m.restoran_id=:id")
-    public Set<Menu> getMenus(@Param("id")int id);
+//    @Query("SELECT m FROM Menu m WHERE m.restoran_id=:id")
+//    public Set<Menu> getMenus(@Param("id")int id);
 }
