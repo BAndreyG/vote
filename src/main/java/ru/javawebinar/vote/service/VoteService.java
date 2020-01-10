@@ -45,7 +45,6 @@ public class VoteService {
     public Set<Menu> get(int id) {
         log.info("get id =", id);
         Set<Menu> menuSet = repoRes.getMenu(id);
-        System.out.println(menuSet);
         return menuSet;
     }
 
