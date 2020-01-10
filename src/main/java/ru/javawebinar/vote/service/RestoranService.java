@@ -23,22 +23,14 @@ public class RestoranService {
         this.repository = repository;
     }
 
-    public List<Restoran> getAll() {
-        return repository.findAll();
-    }
-
     public Set<Menu> get(int id) {
         log.info("get id =", id);
-        ResTo resTo = new ResTo(repository.getById(id));
-        resTo.setMenus(resTo.getMenus().stream()
-                .filter(menu -> menu.isEnabled())
-                .collect(Collectors.toSet()));
-        System.out.println(resTo.getMenus());
-        return resTo.getMenus();
+        Set<Menu> menuSet = repository.getMenu(id);
+        return menuSet;
     }
 
     public void update(Restoran restoran) {
-        Restoran createRes = new Restoran(restoran);
+        repository.save(new Restoran(restoran));
     }
 
     public Restoran create(Restoran restoran) {
