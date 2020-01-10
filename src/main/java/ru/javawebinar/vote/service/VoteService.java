@@ -24,7 +24,6 @@ public class VoteService {
 
     private final VoteRepo repo;
     private final RestoranRepo repoRes;
-    //private final RestoranRepo repoRes;
 
     @Autowired
     public VoteService(VoteRepo repo, RestoranRepo repoRes) {
@@ -40,9 +39,11 @@ public class VoteService {
         return repoRes.getById(id);
     }
 
+
     public Set<Menu> get(int id) {
         log.info("get id =",id);
-        ResTo resTo=new ResTo(repoRes.getById(id));
+        Restoran resTo=new Restoran(repoRes.getById(id));
+       // Set<Menu> menuSet=repoRes.getMenus(id);
         resTo.setMenus(resTo.getMenus().stream()
                 .filter(menu -> menu.isEnabled())
                 .collect(Collectors.toSet()));

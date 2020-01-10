@@ -27,10 +27,10 @@ public class Menu extends AbstractNamedEntity {
     @NotNull
     private Date registered;
 
-    @ManyToOne(optional = false,fetch = FetchType.EAGER)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     //@OneToMany(cascade = CascadeType.ALL,mappedBy="menus",fetch = FetchType.LAZY)
    // @CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "id"))
-   // @JoinColumn(name = "restoran_id")//,nullable = false
+    //@JoinColumn(name = "restoran_id")//,nullable = false
     //@Column(name = "sum_vote")
     @OnDelete(action = OnDeleteAction.CASCADE)
    // @NotNull
