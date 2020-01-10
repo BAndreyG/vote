@@ -29,7 +29,7 @@ import java.util.Set;
 
 @RestController
 @PreAuthorize("hasRole('ADMIN')|| hasRole('USER')")
-@RequestMapping(value = "/",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RootController {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -40,71 +40,31 @@ public class RootController {
     @Autowired
     private VoteService service;
 
-   /* @Autowired
-    public VoteController(VoteService service) {
-        this.service = service;
-    }*/
-
     @GetMapping
-    public List<Restoran> getAll(){
+    public List<Restoran> getAll() {
+        log.info("getAll votes");
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Set<Menu> get(@PathVariable int id){
+    public Set<Menu> get(@PathVariable int id) {
+        log.info("get menu restoran_id = ", id);
         return service.get(id);
     }
 
-    @PostMapping(value ="/{id}")
+    @PostMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<String> createOrUpdate(@Valid Restoran restoran){
-        int userId=SecurityUtil.authUserId();
-        UserTo userTo=SecurityUtil.get().getUserTo();
-        Vote vote=SecurityUtil.get().getUserTo().getVote();
-        if (vote!=null){
-            LocalDateTime voteTime=vote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-            if (voteTime.toLocalDate().compareTo(LocalDate.now())==0){
-                if (LocalTime.now().isBefore(LocalTime.of(11,00)))service.update(vote);
+    public ResponseEntity<String> createOrUpdate(int id) {
+        int userId = SecurityUtil.authUserId();
+        UserTo userTo = SecurityUtil.get().getUserTo();
+        Vote vote = SecurityUtil.get().getUserTo().getVote();
+        if (vote != null) {
+            if (vote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) == 0) {
+                if (LocalTime.now().isBefore(LocalTime.of(11, 00))) service.update(vote, id);
             }
             log.info("Голосовать уже поздно");
             return ResponseEntity.badRequest().build();
-        }
-        else service.create(UserUtil.createNewFromTo(userTo),restoran);
+        } else service.create(UserUtil.createNewFromTo(userTo), id);
         return ResponseEntity.ok().build();
     }
-
-/*    @RolesAllowed(value={"ROLE_SUPER_USER", "ROLE_ADMIN"})
-    @GetMapping("/1")
-    public String get1(){
-        return "@RolesAllowed(value={\"ROLE_SUPER_USER\", \"ROLE_ADMIN\"})";
-    }
-
-    @PreAuthorize("hasRole('ADMIN')|| hasRole('ROLE_ADMIN')")//|| hasRole('USER')
-    @GetMapping("/2")
-    public String get2(){
-        return "@PreAuthorize(\"hasRole('ADMIN') || hasRole('SUPER_USER') || hasRole('USER')\")";
-    }
-
-    @Secured(value={"ROLE_ADMIN"})
-    @GetMapping("/3")
-    public String get3(){
-        return "@Secured(value={\"ROLE_ADMIN\"})";
-    }*/
-
-/*    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("api/v1/users") //, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> getAll() {
-        log.info("getALL {} User");
-        return service.getAll();
-    }*/
-
-  /*  public String getUsers() {
-        return "users";
-    }*/
-
-  /*  @GetMapping(value = "/login")
-    public String login() {
-        return "login";
-    }
-*/
 }

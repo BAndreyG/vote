@@ -31,11 +31,12 @@ public class Vote extends AbstractBaseEntity {
     @NotNull
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restoran_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    private Restoran restoran;
+    private Restoran restoran;*/
+    private int restoran_id;
 
     public Vote(){}
 
@@ -44,9 +45,10 @@ public class Vote extends AbstractBaseEntity {
         this.registered=registered;
     }
 
-    public Vote(@NotNull User user, @NotNull Restoran restoran) {
+    public Vote(@NotNull User user, @NotNull int restoran_id) {
+        //проверить какое ИД
         this.user = user;
-        this.restoran = restoran;
+        this.restoran_id = restoran_id;
         this.registered=new Date();
     }
 
@@ -67,11 +69,11 @@ public class Vote extends AbstractBaseEntity {
         this.user = user;
     }
 
-    public Restoran getRestoran() {
-        return restoran;
+    public int getRestoran() {
+        return restoran_id;
     }
 
-    public void setRestoran(Restoran restoran) {
-        this.restoran = restoran;
+    public void setRestoran(int restoran) {
+        this.restoran_id = restoran;
     }
 }
