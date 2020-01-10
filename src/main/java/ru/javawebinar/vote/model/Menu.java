@@ -27,16 +27,15 @@ public class Menu extends AbstractNamedEntity {
     @NotNull
     private Date registered;
 
-    //@ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     //@OneToMany(cascade = CascadeType.ALL,mappedBy="menus",fetch = FetchType.LAZY)
    // @CollectionTable(name = "restorans", joinColumns = @JoinColumn(name = "id"))
     //@JoinColumn(name = "restoran_id")//,nullable = false
     //@Column(name = "sum_vote")
-    //@OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
    // @NotNull
-   // @JsonIgnore
-    //private Restoran restoran;
-    private int restoran_id;
+    @JsonIgnore
+    private Restoran restoran;
 
     public Menu(){}
 
@@ -71,11 +70,11 @@ public class Menu extends AbstractNamedEntity {
         this.registered = registered;
     }
 
-    public int getRestoran_id() {
-        return restoran_id;
+    public Restoran getRestoran_id() {
+        return restoran;
     }
 
-    public void setRestoran_id(int restoran) {
-        this.restoran_id = restoran;
+    public void setRestoran_id(Restoran restoran) {
+        this.restoran = restoran;
     }
 }
