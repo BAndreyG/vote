@@ -1,46 +1,42 @@
-Разработка и реализация REST API с использованием Hibernate / Spring / SpringMVC (или Spring-Boot) без внешнего интерфейса.
+### login   user@yandex.ru
+### pass    pasword
+### role    user
 
-Задача:
+### login   admin@gmail.com
+### pass    admin
+### role    admin
 
-Создайте систему голосования для решения, где пообедать.
+### login   cook@gmail.com
+### pass    cook
+### role    NO_ROLE
 
-2 типа пользователей: администратор и обычный пользователь
-Администратор может ввести ресторан, и их меню обеда дня (обычно 2-5 пунктов, только название блюда и цена)
-Меню меняется каждый день (администраторы делают обновления)
-Пользователи могут голосовать в каком ресторане они хотят пообедать
-Для каждого пользователя учитывается только один голос
-Если пользователь проголосует снова в тот же день:
-Если это до 11:00, мы предполагаем, что он передумал.
-Если это после 11:00, тогда уже слишком поздно, голосование не может быть изменено
-Каждый ресторан предлагает новое меню каждый день.
 
-В результате предоставьте ссылку на репозиторий github.
+### curl samples (application deployed in application context `vote`).
+> For windows use `Git Bash`
 
-Он должен содержать код и файл README.md с документацией API и командами curl для получения данных для голосования и голосования.
+#### get All Users
+`curl -s http://localhost:8080/topjava/rest/admin/users`
 
-П.С .: Убедитесь, что все работает с последней версией на github :)
+#### get Users 100001
+`curl -s http://localhost:8080/topjava/rest/admin/users/100001`
 
-P.P.S .: Предположим, что ваш API будет использоваться разработчиком внешнего интерфейса для создания внешнего интерфейса поверх этого.
--------------
-в проекте папки: 
-webapp
-spring
-servis
-желательно test
-model
-controller
-----
-4 сущности:
-user_role: 
-	user_id,role
-user:
-	id,name,email,password,vote_id,enable,
-vote:
-    id,user_id,restoran_id,registered
-restoran:
-	id, name,sum_vote
-menu:
-	id,restoran_id,name,price,enable,registered
+#### get All Meals
+`curl -s http://localhost:8080/topjava/rest/profile/meals`
 
-----
-BD -HSQLDB
+#### get Meals 100003
+`curl -s http://localhost:8080/topjava/rest/profile/meals/100003`
+
+#### filter Meals
+`curl -s "http://localhost:8080/topjava/rest/profile/meals/filter?startDate=2015-05-30&startTime=07:00:00&endDate=2015-05-31&endTime=11:00:00"`
+
+#### get Meals not found
+`curl -s -v http://localhost:8080/topjava/rest/profile/meals/100008`
+
+#### delete Meals
+`curl -s -X DELETE http://localhost:8080/topjava/rest/profile/meals/100002`
+
+#### create Meals
+`curl -s -X POST -d '{"dateTime":"2015-06-01T12:00","description":"Created lunch","calories":300}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava/rest/profile/meals`
+
+#### update Meals
+`curl -s -X PUT -d '{"dateTime":"2015-05-30T07:00", "description":"Updated breakfast", "calories":200}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/profile/meals/100003`
