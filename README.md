@@ -14,17 +14,17 @@
 ### curl samples (application deployed in application context `vote`).
 > For windows use `Git Bash`
 
+#### get All Restoran
+`curl -s http://127.0.0.1:8080`
+
+#### get Menu Restotan_id 100001
+`curl -s http://127.0.0.1:8080/100001`
+
 #### get All Users
-`curl -s http://localhost:8080/topjava/rest/admin/users`
+`curl -s http://localhost:8080/api/v1/users`
 
-#### get Users 100001
-`curl -s http://localhost:8080/topjava/rest/admin/users/100001`
-
-#### get All Meals
-`curl -s http://localhost:8080/topjava/rest/profile/meals`
-
-#### get Meals 100003
-`curl -s http://localhost:8080/topjava/rest/profile/meals/100003`
+#### get User 100001
+`curl -s http://localhost:8080/api/v1/users/100001`
 
 #### filter Meals
 `curl -s "http://localhost:8080/topjava/rest/profile/meals/filter?startDate=2015-05-30&startTime=07:00:00&endDate=2015-05-31&endTime=11:00:00"`
