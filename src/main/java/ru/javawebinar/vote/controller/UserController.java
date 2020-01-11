@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.vote.model.Role;
 import ru.javawebinar.vote.model.User;
+import ru.javawebinar.vote.repository.UserRepo;
 import ru.javawebinar.vote.service.UserService;
 
 import javax.validation.Valid;
@@ -21,13 +22,16 @@ import java.util.List;
 
 @RestController
 @PreAuthorize("hasRole('ADMIN')")
-@RequestMapping(value = "api/v1/usersZ",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/v1/users",produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UserService service;
+
+    @Autowired
+    private UserRepo repo;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
@@ -45,6 +49,9 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("delete {}", id);
+        /*if (repo.existsById(id)) {
+            repo.deleteById(id);
+        }*/
         service.delete(id);
     }
 
