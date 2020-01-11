@@ -49,9 +49,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("delete {}", id);
-        /*if (repo.existsById(id)) {
-            repo.deleteById(id);
-        }*/
         service.delete(id);
     }
 

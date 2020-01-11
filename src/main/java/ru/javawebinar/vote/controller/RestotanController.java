@@ -55,8 +55,6 @@ public class RestotanController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        if (repo.existsById(id)) {
-            repo.deleteById(id);
-        }
+        service.delete(id);
     }
 }
