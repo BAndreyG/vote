@@ -12,6 +12,7 @@ import java.util.Set;
 @Repository
 public interface RestoranRepo extends JpaRepository<Restoran,Integer> {
     Restoran getById(int id);
+    boolean deleteById(int id);
 
     @Query("SELECT m FROM Menu m WHERE m.restoran_id=:id")
     public Set<Menu> getMenu(@Param("id") int id);

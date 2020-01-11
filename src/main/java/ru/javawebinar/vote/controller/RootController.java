@@ -6,22 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.vote.TO.UserTo;
 import ru.javawebinar.vote.model.Menu;
 import ru.javawebinar.vote.model.Restoran;
-import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.model.Vote;
-import ru.javawebinar.vote.service.UserService;
 import ru.javawebinar.vote.service.VoteService;
 import ru.javawebinar.vote.util.UserUtil;
 
-import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -33,9 +27,6 @@ import java.util.Set;
 public class RootController {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
-
-    @Autowired
-    private UserService serviceUser;
 
     @Autowired
     private VoteService service;
