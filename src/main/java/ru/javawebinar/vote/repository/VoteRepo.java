@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VoteRepo extends JpaRepository<Vote,Integer> {
-    Vote getById(int id);
 }
