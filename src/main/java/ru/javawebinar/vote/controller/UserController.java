@@ -30,9 +30,6 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @Autowired
-    private UserRepo repo;
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
         log.info("getALL {} User");
