@@ -1,10 +1,14 @@
 package ru.javawebinar.vote.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import ru.javawebinar.vote.AuthorizedUser;
 import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.repository.UserRepo;
 
@@ -14,16 +18,17 @@ import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepo repository;
+    private final PasswordEncoder passwordEncoder;
 
     /*@Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 */
     @Autowired
-    public UserService(UserRepo repository) {
-        this.repository = repository;
+    public UserService(UserRepo repository,PasswordEncoder passwordEncoder) {
+        this.repository = repository;this.passwordEncoder=passwordEncoder;
     }
 
     public User create(User user) {
@@ -52,4 +57,14 @@ public class UserService {
         repository.save(userUpdate);
     }
 
+    @Override
+    public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserDetails userDetails;
+        System.out.println(email);
+        User user = repository.getByEmail(email.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new AuthorizedUser(user);
+    }
 }
