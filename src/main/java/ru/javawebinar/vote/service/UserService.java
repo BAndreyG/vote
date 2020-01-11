@@ -1,6 +1,9 @@
 package ru.javawebinar.vote.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +20,7 @@ import java.util.List;
 import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService implements UserDetailsService {
 
     private final UserRepo repository;
@@ -33,6 +36,7 @@ public class UserService implements UserDetailsService {
 
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
@@ -46,21 +50,20 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by("name"));
     }
 
     @Transactional
     public void update(User user,int id) {
         User userUpdate=new User(get(id));
         Assert.notNull(user, "user must not be null");
+        user.setPassword(passwordEncoder.encode(userUpdate.getPassword()));
       //  user.setPassword(bCryptPasswordEncoder.encode(userUpdate.getPassword()));
         repository.save(userUpdate);
     }
 
     @Override
     public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserDetails userDetails;
-        System.out.println(email);
         User user = repository.getByEmail(email.toLowerCase());
         if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
