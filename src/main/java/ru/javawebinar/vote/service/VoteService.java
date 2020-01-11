@@ -36,11 +36,12 @@ public class VoteService {
     }
 
     public Set<Menu> get(int id) {
+        return checkNotFoundWithId(repoRes.getMenu(id),id);/*
         if (repoRes.existsById(id)){
             repoRes.getMenu(id);
-        }
-        return  null;
-       // throw new NotFoundException("Restoran " + id + " is not found");
+        }*/
+       // return  null;
+//        throw new NotFoundException("Restoran " + id + " is not found");
         //throw new NotFoundException("Not found entity with " + msg);   return checkNotFoundWithId(
     }
 
