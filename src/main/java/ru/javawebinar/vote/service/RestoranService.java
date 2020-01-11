@@ -1,7 +1,5 @@
 package ru.javawebinar.vote.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +14,7 @@ import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class RestoranService {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+
     private final RestoranRepo repository;
 
     @Autowired
@@ -25,8 +23,12 @@ public class RestoranService {
     }
 
     public Set<Menu> get(int id) {
-        log.info("get id =", id);
-        return repository.getMenu(id);
+        if (repository.existsById(id)){
+            return checkNotFoundWithId(repository.getMenu(id),id);
+        }
+        else System.out.println("error");
+        return null;
+
     }
 
     @Transactional

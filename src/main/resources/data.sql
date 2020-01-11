@@ -5,19 +5,19 @@ DELETE FROM RESTORANS;
 DELETE FROM VOTES;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
-INSERT INTO users (name, email, password) VALUES
-  ('User', 'user@yandex.ru', 'password'),
-  ('Admin', 'admin@gmail.com', 'admin'),
-  ('Cook', 'cook@gmail.com', 'cook');
+INSERT INTO users (name, email, password,vote_id) VALUES
+  ('User', 'user@yandex.ru', '$2a$10$8E9T8IrsfJllvBHDhsFR4Ovv6I6NsjKqbNss7LvTziVZwAvMKpuSW',0),
+  ('Admin', 'admin@gmail.com', '$2a$10$DIweDRnnDQ43mtxsgbwfq.WjhOpYRZ39BKGBc8zso5mpEhATV.jZe',100013),
+  ('Cook', 'cook@gmail.com', '$2a$10$Ep78NcvgFIBd4HbnRQrkb.L0lYfeist9Q.erk.lGdgCQWnKiJNyZi',0);
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
   ('ROLE_ADMIN', 100001),
   ('ROLE_USER', 100001);
 
-INSERT INTO restorans (ID,name)
-VALUES (100004,'Пельменная'),
-       (100003,'Суши-сити');
+INSERT INTO restorans (name,sum_vote)
+VALUES ('Пельменная',0),
+       ('Суши-сити',1);
 
 INSERT INTO menus (name, price,registered,restoran_id)
 VALUES ('Манка',10.5,'2015-05-30 10:00:00', 100004),
@@ -29,5 +29,5 @@ VALUES ('Манка',10.5,'2015-05-30 10:00:00', 100004),
        ( 'Админ ланч', 510,'2015-06-01 14:00:00', 100003),
        ('Админ ужин', 1500,'2015-06-01 21:00:00',  100003);
 
-INSERT INTO votes (REGISTERED,USER_ID,RESTORAN_ID)
-VALUES ('2015-05-30 10:00:00',100001,100004);
+INSERT INTO votes (ID,REGISTERED,USER_ID,RESTORAN_ID)
+VALUES (100013,'2015-05-30 10:00:00',100001,100004);

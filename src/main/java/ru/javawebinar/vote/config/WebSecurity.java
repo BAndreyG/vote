@@ -29,7 +29,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal (AuthenticationManagerBuilder managerBuilder) throws  Exception{
-        System.out.println(managerBuilder);
         managerBuilder.userDetailsService(service);
     }
    /* @Bean
