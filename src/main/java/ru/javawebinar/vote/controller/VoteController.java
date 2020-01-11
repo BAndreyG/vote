@@ -3,6 +3,7 @@ package ru.javawebinar.vote.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.vote.AuthorizedUser;
 import ru.javawebinar.vote.HasId;
@@ -27,7 +28,9 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "api/v1/votes",produces = MediaType.APPLICATION_JSON_VALUE)
+//@RequestMapping(value = "api/v1/votes",produces = MediaType.APPLICATION_JSON_VALUE)
+@PreAuthorize("hasRole('ADMIN')|| hasRole('USER')")
+@RequestMapping(value = "votes",produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -51,19 +54,18 @@ public class VoteController {
 
     @PostMapping(value ="/{id}")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<String> createOrUpdate(@Valid Restoran restoran){
+    public ResponseEntity<String> createOrUpdate(int id){
         int userId=SecurityUtil.authUserId();
         UserTo userTo=SecurityUtil.get().getUserTo();
         Vote vote=SecurityUtil.get().getUserTo().getVote();
         if (vote!=null){
-            LocalDateTime voteTime=vote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-            if (voteTime.toLocalDate().compareTo(LocalDate.now())==0){
-                if (LocalTime.now().isBefore(LocalTime.of(11,00)))service.update(vote);
+            if (vote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now())==0) {
+                if (LocalTime.now().isBefore(LocalTime.of(11,00)))service.update(vote,id);
             }
             log.info("Голосовать уже поздно");
             return ResponseEntity.badRequest().build();
         }
-        else service.create(UserUtil.createNewFromTo(userTo),restoran);
+        else service.create(UserUtil.createNewFromTo(userTo),id);
         return ResponseEntity.ok().build();
     }
 

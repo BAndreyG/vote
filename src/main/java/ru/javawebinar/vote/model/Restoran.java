@@ -30,7 +30,7 @@ public class Restoran extends AbstractNamedEntity{
     @Column(name = "sum_vote")
     private int sum_vote;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restoran")
+    @OneToMany(fetch = FetchType.LAZY)//, mappedBy = "restoran"
     @JsonIgnore
     private Set<Menu> menus;
 
