@@ -42,7 +42,8 @@ public class UserService implements UserDetailsService {
     }
 
     public void delete(int id) {
-        checkNotFoundWithId(repository.deleteById(id),id);
+        if (repository.existsById(id)){
+        repository.deleteById(id);}
     }
 
     public User get(int id) {

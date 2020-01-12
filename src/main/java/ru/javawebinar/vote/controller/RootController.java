@@ -23,8 +23,10 @@ import java.util.Set;
 
 @RestController
 @PreAuthorize("hasRole('ADMIN')|| hasRole('USER')")
-@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = RootController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RootController {
+
+    static final String REST_URL = "/";
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -58,4 +60,6 @@ public class RootController {
         } else service.create(UserUtil.createNewFromTo(userTo), id);
         return ResponseEntity.ok().build();
     }
+
+
 }
