@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.vote.model.Menu;
@@ -24,7 +24,7 @@ import java.util.Set;
 import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
 
 @RestController
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping(value =RestotanController.REST_URL,produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestotanController {
 

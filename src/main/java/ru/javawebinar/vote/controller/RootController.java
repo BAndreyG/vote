@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.vote.TO.UserTo;
 import ru.javawebinar.vote.model.Menu;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@PreAuthorize("hasRole('ADMIN')|| hasRole('USER')")
+//@PreAuthorize("hasRole('ADMIN')|| hasRole('USER')")
 @RequestMapping(value = RootController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RootController {
 
@@ -45,7 +45,7 @@ public class RootController {
         return service.get(id);
     }
 
-    @PostMapping(value = "/{id}")
+    /*@PostMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<String> createOrUpdate(int id) {
         int userId = SecurityUtil.authUserId();
@@ -59,7 +59,7 @@ public class RootController {
             return ResponseEntity.badRequest().build();
         } else service.create(UserUtil.createNewFromTo(userTo), id);
         return ResponseEntity.ok().build();
-    }
+    }*/
 
 
 }
