@@ -34,7 +34,9 @@ public class RestoranService {
     @Transactional
     public void update(Restoran restoran,int id) {
         Assert.notNull(restoran, "restoran must not be null");
-        repository.save(new Restoran(restoran));
+        Restoran createdRestoran=new Restoran(repository.findById(id));
+        createdRestoran.setName(restoran.getName());
+        repository.save(new Restoran(createdRestoran));
     }
 
     public Restoran create(Restoran restoran) {

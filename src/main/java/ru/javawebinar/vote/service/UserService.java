@@ -35,6 +35,7 @@ public class UserService  {  //implements UserDetailsService
         this.repository = repository;
     }
 
+    @Transactional
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
         //user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -57,8 +58,13 @@ public class UserService  {  //implements UserDetailsService
 
     @Transactional
     public void update(User user,int id) {
-        User userUpdate=new User(get(id));
         Assert.notNull(user, "user must not be null");
+        User userUpdate=new User(get(id));
+        userUpdate.setName(user.getName());
+        userUpdate.setPassword(user.getPassword());
+        userUpdate.setEmail(user.getEmail());
+        userUpdate.setRoles(user.getRoles());
+
         //user.setPassword(passwordEncoder.encode(userUpdate.getPassword()));
       //  user.setPassword(bCryptPasswordEncoder.encode(userUpdate.getPassword()));
         repository.save(userUpdate);
