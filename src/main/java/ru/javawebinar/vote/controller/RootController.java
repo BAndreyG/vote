@@ -8,13 +8,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.vote.TO.UserTo;
 import ru.javawebinar.vote.model.Menu;
 import ru.javawebinar.vote.model.Restoran;
+import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.model.Vote;
 import ru.javawebinar.vote.service.VoteService;
 import ru.javawebinar.vote.util.UserUtil;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -45,21 +48,18 @@ public class RootController {
         return service.get(id);
     }
 
-    /*@PostMapping(value = "/{id}")
+    @PostMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<String> createOrUpdate(int id) {
-        int userId = SecurityUtil.authUserId();
-        UserTo userTo = SecurityUtil.get().getUserTo();
-        Vote vote = SecurityUtil.get().getUserTo().getVote();
-        if (vote != null) {
-            if (vote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) == 0) {
-                if (LocalTime.now().isBefore(LocalTime.of(11, 00))) service.update(vote, id);
-            }
-            log.info("Голосовать уже поздно");
-            return ResponseEntity.badRequest().build();
-        } else service.create(UserUtil.createNewFromTo(userTo), id);
-        return ResponseEntity.ok().build();
-    }*/
+    public ResponseEntity<Vote> createOrUpdate(@RequestBody User user, @PathVariable int id) {
+//        int userId = SecurityUtil.authUserId();
+//        UserTo userTo = SecurityUtil.get().getUserTo();
+//        Vote vote = SecurityUtil.get().getUserTo().getVote();
+        Vote created=service.createOrUpdate(100001,id);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
+    }
 
 
 }
