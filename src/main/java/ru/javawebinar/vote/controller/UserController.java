@@ -30,9 +30,6 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @Autowired
-    private UserRepo repo;
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
         log.info("getALL {} User");
@@ -49,9 +46,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("delete {}", id);
-        /*if (repo.existsById(id)) {
-            repo.deleteById(id);
-        }*/
         service.delete(id);
     }
 

@@ -9,5 +9,5 @@ import ru.javawebinar.vote.model.User;
 public interface UserRepo extends JpaRepository<User,Integer> {
     User getById(int id);
     boolean deleteById(int id);
-
+    User getByEmail(String email);
 }

@@ -16,12 +16,6 @@ import java.util.Set;
 @EqualsAndHashCode(of={"id"})
 public class Restoran extends AbstractNamedEntity{
 
-   /* public static final int START_SEQ = 100000;
-    @Id
-    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-    private int id;*/
-
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name")
@@ -30,7 +24,7 @@ public class Restoran extends AbstractNamedEntity{
     @Column(name = "sum_vote")
     private int sum_vote;
 
-    @OneToMany(fetch = FetchType.LAZY)//, mappedBy = "restoran"
+    @OneToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Menu> menus;
 
@@ -44,9 +38,9 @@ public class Restoran extends AbstractNamedEntity{
         this.sum_vote=0;
     }
 
-    public Restoran(String name,int sum_vote){
+    public Restoran(String name){
         this.name=name;
-        this.sum_vote=sum_vote;
+        this.sum_vote=0;
     }
 
     public Restoran(Integer id, String name, Set<Menu> menus, int sum_vote) {

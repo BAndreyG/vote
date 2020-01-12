@@ -9,6 +9,7 @@ import ru.javawebinar.vote.controller.RestotanController;
 import ru.javawebinar.vote.controller.UserController;
 import ru.javawebinar.vote.model.Role;
 import ru.javawebinar.vote.model.User;
+import ru.javawebinar.vote.util.PasswordEncoderGenerator;
 
 import javax.persistence.EntityManager;
 import javax.swing.text.html.parser.Entity;
