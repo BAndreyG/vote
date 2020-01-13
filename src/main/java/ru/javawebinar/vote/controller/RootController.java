@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.vote.model.Menu;
 import ru.javawebinar.vote.model.Restoran;
+import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.model.Vote;
 import ru.javawebinar.vote.service.VoteService;
 
@@ -49,6 +50,7 @@ public class RootController {
 //        int userId = SecurityUtil.authUserId();
 //        UserTo userTo = SecurityUtil.get().getUserTo();
 //        Vote vote = SecurityUtil.get().getUserTo().getVote();
+        //User user= new User(100001,"Admin","admin@gmail.com","admin",);
         Vote created = service.createOrUpdate(100001, id); //заменить ид на user( не userTo)
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")

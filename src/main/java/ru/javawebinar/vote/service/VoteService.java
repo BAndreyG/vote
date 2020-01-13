@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.vote.model.Menu;
 import ru.javawebinar.vote.model.Restoran;
@@ -66,18 +67,18 @@ public class VoteService {
         return repo.save(new Vote(vote.getUser(), restoran_id));
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void savUs(User user){
         repoUser.save(user);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public User getUser(int id){
         return repoUser.getById(id);
     }
 
-    @Transactional
-    public Vote createOrUpdate(int user_id, int restoran_id) {
+   // @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Vote createOrUpdate(int user_id, int restoran_id) {//,User user
         //Assert.notNull(user, "user must not be null");
         User user=getUser(user_id);
         Vote newVote=voteIf(user.getVote(),restoran_id);
