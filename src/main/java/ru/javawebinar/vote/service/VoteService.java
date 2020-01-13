@@ -3,7 +3,11 @@ package ru.javawebinar.vote.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.vote.TO.ResTo;
 import ru.javawebinar.vote.TO.VoteTo;
 import ru.javawebinar.vote.model.Menu;
@@ -12,19 +16,24 @@ import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.model.Vote;
 import ru.javawebinar.vote.repository.RestoranRepo;
 import ru.javawebinar.vote.repository.VoteRepo;
+import ru.javawebinar.vote.util.UserUtil;
+import ru.javawebinar.vote.util.exception.NotFoundException;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class VoteService {
 
-    protected final Logger log = LoggerFactory.getLogger(getClass());
-
     private final VoteRepo repo;
     private final RestoranRepo repoRes;
-    //private final RestoranRepo repoRes;
+
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public VoteService(VoteRepo repo, RestoranRepo repoRes) {
@@ -32,30 +41,47 @@ public class VoteService {
         this.repoRes = repoRes;
     }
 
-    public List<Restoran> getAll(){
-        return repoRes.findAll();
-    }
-
-    public Restoran getTest(int id){
-        return repoRes.getById(id);
+    public List<Restoran> getAll() {
+        return repoRes.findAll(Sort.by("name"));
     }
 
     public Set<Menu> get(int id) {
-        log.info("get id =",id);
-        ResTo resTo=new ResTo(repoRes.getById(id));
-        resTo.setMenus(resTo.getMenus().stream()
-                .filter(menu -> menu.isEnabled())
-                .collect(Collectors.toSet()));
-        System.out.println(resTo.getMenus());
-        return resTo.getMenus();
+        return checkNotFoundWithId(repoRes.getMenu(id),id);/*
+        if (repoRes.existsById(id)){
+            repoRes.getMenu(id);
+        }*/
+       // return  null;
+//        throw new NotFoundException("Restoran " + id + " is not found");
+        //throw new NotFoundException("Not found entity with " + msg);   return checkNotFoundWithId(
     }
 
-    public void create(User user, Restoran restoran) {
-        Vote vote= new Vote(user,restoran);
-        repo.save(vote);
+    @Transactional
+    public void create(Vote vote, int restoran_id) {
+        repoRes.sumVoteIncrement(restoran_id);
+        repo.save(new Vote(vote.getUser(), restoran_id));
     }
 
-    public void update(Vote vote) {
+    @Transactional
+    public void update(Vote vote, int restoran_id) {
+        repoRes.sumVoteDecrement(vote.getRestoran());
+        repoRes.sumVoteIncrement(restoran_id);
+        repo.save(new Vote(vote.getUser(), restoran_id));
+    }
 
+    public Vote createOrUpdate(int user_id, int restoran_id) {
+        //Assert.notNull(user, "user must not be null");
+        Vote createdVote=repo.getVoteByUserId(user_id);
+        System.out.println(createdVote);
+        Vote createdVote2=repo.findByUserId(user_id);
+        System.out.println(createdVote2);
+        Vote createdVote3=repo.getVoteByUser_id(user_id);
+        System.out.println(createdVote3);
+        if (createdVote != null) {
+            if (createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) == 0) {
+                if (LocalTime.now().isBefore(LocalTime.of(11, 00))) update(createdVote, restoran_id);
+            }
+            log.info("Голосовать уже поздно");
+        } else create(createdVote, restoran_id);//UserUtil.createNewFromTo(userTo)
+        return createdVote;
     }
 }

@@ -34,6 +34,8 @@ CREATE TABLE restorans
     name     VARCHAR(50)       NOT NULL,
     sum_vote INTEGER DEFAULT 0 NOT NULL
 );
+CREATE UNIQUE INDEX restorans_unique_name_idx
+    ON restorans (name);
 
 CREATE TABLE menus
 (
@@ -43,7 +45,7 @@ CREATE TABLE menus
     enabled     BOOLEAN   DEFAULT TRUE NOT NULL,
     registered  TIMESTAMP DEFAULT NOW()  NOT NULL,
     restoran_id INTEGER                ,
-    FOREIGN KEY (restoran_id) REFERENCES RESTORANS (id)
+    FOREIGN KEY (restoran_id) REFERENCES RESTORANS (id) ON DELETE CASCADE
 );
 
 CREATE TABLE votes

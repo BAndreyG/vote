@@ -13,20 +13,32 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users") //,uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "users_unique_email_idx")})
-public class User extends AbstractNamedEntity {
+public class User extends AbstractBaseEntity {
 
-    @Column(name = "email", nullable = false, unique = true)
+    @NotBlank
+    @Size(min = 2, max = 100)
+    @Column(name = "name")
+    protected String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column(name = "email")
     @Email
     @NotBlank
     @Size(max = 100)
     private String email;
 
-    @Column(name="password",nullable = false)
+    @Column(name="password")
     @Size(min=8,max=250)
     private String password;
 
-    @Column(name = "registered",nullable = false,columnDefinition = "timestamp default now()", insertable = false, updatable =false)
-    @NotNull
+    @Column(name = "registered",columnDefinition = "timestamp default now()", insertable = false, updatable =false)
     private Date registered;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
@@ -45,7 +57,7 @@ public class User extends AbstractNamedEntity {
     @BatchSize(size = 200)
     private Date vote;*/
 
-    @OneToOne(optional=false, cascade=CascadeType.ALL)//fetch = FetchType.EAGER
+    @OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)///optional=false,
    // @CollectionTable(name = "votes",joinColumns = @JoinColumn(name = "user_id"))
     @JoinColumn (name = "id")
     private Vote vote;
@@ -60,16 +72,17 @@ public class User extends AbstractNamedEntity {
         this(id,name,email,password,registered,true, EnumSet.of(role, roles), null);
     }
 
-    public User(@Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, Vote vote) {
+    public User(@Size(min = 8, max = 250) String password, boolean enabled, Set<Role> roles, Vote vote) {
         this.password = password;
-        this.registered = registered;
+        this.registered = new Date();
         this.enabled = enabled;
         this.roles = roles;
         this.vote = vote;
     }
 
     public User(Integer id, String name, String email,@Size(min = 8, max = 250) String password, @NotNull Date registered, boolean enabled, Set<Role> roles, Vote vote) {
-        super(id, name);
+        super(id);
+        this.name=name;
         this.email=email;
         this.password = password;
         this.registered = registered;
