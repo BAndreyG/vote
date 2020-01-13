@@ -60,24 +60,26 @@ public class VoteService {
         repo.save(new Vote(vote.getUser(), restoran_id));
     }
 
-    @Transactional
+//    @Transactional
     public void update(Vote vote, int restoran_id) {
         repoRes.sumVoteDecrement(vote.getRestoran());
         repoRes.sumVoteIncrement(restoran_id);
         repo.save(new Vote(vote.getUser(), restoran_id));
     }
 
+    @Transactional
     public Vote createOrUpdate(int user_id, int restoran_id) {
         //Assert.notNull(user, "user must not be null");
-        Vote createdVote=repo.getVoteByUserId(user_id);
+        Vote createdVote=repo.getById(100016);
         System.out.println(createdVote);
-        Vote createdVote2=repo.findByUserId(user_id);
-        System.out.println(createdVote2);
-        Vote createdVote3=repo.getVoteByUser_id(user_id);
+        Vote createdVote3=repo.getVote(user_id);
         System.out.println(createdVote3);
+        createdVote3=repo.getVote(100013);
         if (createdVote != null) {
             if (createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) == 0) {
-                if (LocalTime.now().isBefore(LocalTime.of(11, 00))) update(createdVote, restoran_id);
+                if (LocalTime.now().isAfter(LocalTime.of(11, 00))) update(createdVote, restoran_id);
+            }else if (createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) < 0){
+                create(createdVote, restoran_id);
             }
             log.info("Голосовать уже поздно");
         } else create(createdVote, restoran_id);//UserUtil.createNewFromTo(userTo)

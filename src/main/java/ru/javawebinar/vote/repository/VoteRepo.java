@@ -11,5 +11,7 @@ public interface VoteRepo extends JpaRepository<Vote,Integer> {
     Vote getVoteByUserId(int id);
 
     @Query("SELECT v FROM Vote v WHERE v.user.id=:id")
-    Vote getVoteByUser_id(int id);
+    Vote getVote(int id);
+
+    Vote getById(int id);
 }
