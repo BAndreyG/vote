@@ -34,6 +34,8 @@ CREATE TABLE restorans
     name     VARCHAR(50)       NOT NULL,
     sum_vote INTEGER DEFAULT 0 NOT NULL
 );
+CREATE UNIQUE INDEX restorans_unique_name_idx
+    ON restorans (name);
 
 CREATE TABLE menus
 (

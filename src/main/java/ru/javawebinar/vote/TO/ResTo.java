@@ -15,13 +15,13 @@ public class ResTo  extends BaseTo{
 
     private int sum_vote;
 
-    private Set<Menu> menus;
+    //private Set<Menu> menus;
 
     public ResTo() {
     }
 
     public ResTo(Restoran restoran) {
-        this(restoran.getId(),restoran.getName(),restoran.getMenus(),restoran.getSum_vote());
+        this(restoran.getId(),restoran.getName(),restoran.getSum_vote()); //restoran.getMenus()
     }
 
     public String getName() {
@@ -40,18 +40,18 @@ public class ResTo  extends BaseTo{
         this.sum_vote = sum_vote;
     }
 
-    public Set<Menu> getMenus() {
+   /* public Set<Menu> getMenus() {
         return menus;
     }
 
     public void setMenus(Set<Menu> menus) {
         this.menus = menus;
-    }
+    }*/
 
-    public ResTo(Integer id, String name, Set<Menu> menus, int sum_vote) {
+    public ResTo(Integer id, String name, int sum_vote) {// , Set<Menu> menus
         this.id=id;
         this.name=name;
-        this.menus=menus;
+       // this.menus=menus;
         this.sum_vote=sum_vote;
     }
 
@@ -60,7 +60,7 @@ public class ResTo  extends BaseTo{
         return "ResTo{" +
                 "name='" + name + '\'' +
                 ", sum_vote=" + sum_vote +
-                ", menus=" + menus +
+               // ", menus=" + menus +
                 ", id=" + id +
                 '}';
     }
