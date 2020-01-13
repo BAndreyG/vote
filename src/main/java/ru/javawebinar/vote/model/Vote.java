@@ -1,5 +1,6 @@
 package ru.javawebinar.vote.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -25,10 +26,11 @@ public class Vote extends AbstractBaseEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private String restoran;
 */
-    @OneToOne(mappedBy = "vote",fetch = FetchType.EAGER)//fetch = FetchType.EAGER  optional = false,
+    @OneToOne()//fetch = FetchType.EAGER  optional = false,,fetch = FetchType.EAGER mappedBy = "vote"
    // @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
+    @JsonIgnore
     private User user;
 
     /*@ManyToOne(fetch = FetchType.EAGER)
