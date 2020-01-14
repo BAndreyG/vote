@@ -8,14 +8,13 @@ DROP TABLE IF EXISTS menus CASCADE ;
 CREATE SEQUENCE global_seq START WITH 100000;
 CREATE TABLE users
 (
-    id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-    name       VARCHAR(50)             NOT NULL,
-    email      VARCHAR(255)            NOT NULL,
-    password   VARCHAR(255)            NOT NULL,
-    registered TIMESTAMP DEFAULT NOW() NOT NULL,
-    enabled    BOOLEAN   DEFAULT TRUE  NOT NULL,
-    vote_id    INTEGER   DEFAULT 0     NOT NULL
---     FOREIGN KEY (vote_id) REFERENCES VOTES (id)
+    id         INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    name       VARCHAR(50)                       NOT NULL,
+    email      VARCHAR(255)                      NOT NULL,
+    password   VARCHAR(255)                      NOT NULL,
+    registered TIMESTAMP           DEFAULT NOW() NOT NULL,
+    enabled    BOOLEAN             DEFAULT TRUE  NOT NULL,
+    vote_id    INTEGER             DEFAULT NULL
 );
 CREATE UNIQUE INDEX users_unique_name_password_idx
     ON USERS (name, password);
@@ -54,6 +53,6 @@ CREATE TABLE votes
     registered  TIMESTAMP DEFAULT NOW() NOT NULL,
     user_id     INTEGER,
     restoran_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES USERS (id) ON DELETE CASCADE,
-    FOREIGN KEY (restoran_id) REFERENCES RESTORANS (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES USERS (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (restoran_id) REFERENCES RESTORANS (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
