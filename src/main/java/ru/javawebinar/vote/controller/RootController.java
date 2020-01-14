@@ -51,7 +51,7 @@ public class RootController {
 //        UserTo userTo = SecurityUtil.get().getUserTo();
 //        Vote vote = SecurityUtil.get().getUserTo().getVote();
         //User user= new User(100001,"Admin","admin@gmail.com","admin",);
-        Vote created = service.createOrUpdate(100001, id); //заменить ид на user( не userTo)
+        Vote created = service.createOrUpdate(100000, id); //заменить ид на user( не userTo)
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();

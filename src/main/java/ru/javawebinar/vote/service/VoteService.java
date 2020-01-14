@@ -56,21 +56,21 @@ public class VoteService {
     }
 
 
-    public Vote create(Vote vote, int restoran_id) {
+    public Vote create(User user, int restoran_id) {
         repoRes.sumVoteIncrement(restoran_id);
-        return repo.save(new Vote(vote.getUser(), restoran_id));
+        return repo.saveAndFlush(new Vote(user, restoran_id));//repo.saveAndFlush(new Vote(vote.getUser(), restoran_id));
     }
 
     //@Transactional
     public Vote update(Vote vote, int restoran_id) {
         repoRes.sumVoteDecrement(vote.getRestoran());
         repoRes.sumVoteIncrement(restoran_id);
-        return repo.save(new Vote(vote.getUser(), restoran_id));
+        return repo.saveAndFlush(new Vote(vote.getUser(), restoran_id));//repo.saveAndFlush(new Vote(vote.getUser(), restoran_id));
     }
 
    // @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void savUs(User user){
-        repoUser.save(user);
+        repoUser.saveAndFlush(user);
     }
 
    // @Transactional(propagation = Propagation.NOT_SUPPORTED)
@@ -83,18 +83,23 @@ public class VoteService {
         //Assert.notNull(user, "user must not be null");
 
         User user=getUser(user_id);
-        Vote newVote=voteIf(user.getVote(),restoran_id);
+        Vote newVote=voteIf(user,restoran_id);
         if (newVote!=null){
-            repoUser.changeVote(newVote.getId(),user_id);//,user.getId()
             user.setVote(newVote);
-            savUs(user);
+            repoUser.saveAndFlush(user);
+            repoUser.changeVote(newVote.getId(),user_id);//,user.getId()
+            //user.setVote(newVote);
+            //savUs(user);
+            System.out.println(newVote.getUser());
             return newVote;
         }
         return null;
     }
 
-    public Vote voteIf(Vote createdVote,int restoran_id){
+    public Vote voteIf(User user,int restoran_id){
+        Vote createdVote=user.getVote();
         if (createdVote != null) {
+            System.out.println(createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()));
             if (createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) == 0) {
                 if (LocalTime.now().isAfter(LocalTime.of(11, 00))){
                     if (createdVote.getRestoran()==restoran_id){
@@ -104,11 +109,12 @@ public class VoteService {
                     return update(createdVote, restoran_id);
                 }
             }else if (createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) < 0){
-                return create(createdVote, restoran_id);
+                return create(user, restoran_id);
             }
             log.info("Голосовать уже поздно");
             return null;
         }
-        return create(createdVote, restoran_id);
+        //createdVote.setUser(user);
+        return create(user, restoran_id);
     }
 }

@@ -15,7 +15,6 @@ CREATE TABLE users
     registered TIMESTAMP           DEFAULT NOW() NOT NULL,
     enabled    BOOLEAN             DEFAULT TRUE  NOT NULL,
     vote_id    INTEGER             DEFAULT NULL
-
 );
 CREATE UNIQUE INDEX users_unique_name_password_idx
     ON USERS (name, password);
@@ -54,6 +53,6 @@ CREATE TABLE votes
     registered  TIMESTAMP           DEFAULT NOW() NOT NULL,
     user_id     INTEGER,
     restoran_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES USERS (id) ON DELETE CASCADE,
-    FOREIGN KEY (restoran_id) REFERENCES RESTORANS (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES USERS (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (restoran_id) REFERENCES RESTORANS (id) ON UPDATE CASCADE ON DELETE CASCADE
 );

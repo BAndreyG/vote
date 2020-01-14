@@ -15,14 +15,10 @@ public interface UserRepo extends JpaRepository<User,Integer> {
     User getById(int id);
     User getByEmail(String email);
 
-    @Transactional
+    @Transactional()
     @Modifying
     @Query("UPDATE User set vote_id=:id WHERE id=:user_id ")
-    void changeVote( int id,int user_id); //,int id
+    void changeVote( int id,int user_id);
 
-    /*@Transactional
-    @Modifying
-    @Query("UPDATE User set vote_id=:vote WHERE id=:id ")
-    void saveUser( Vote vote,int id);
-*/
+
 }

@@ -3,6 +3,7 @@ package ru.javawebinar.vote.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.event.internal.OnUpdateVisitor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,7 +29,7 @@ public class Vote extends AbstractBaseEntity {
 */
     @OneToOne(cascade=CascadeType.ALL)//fetch = FetchType.EAGER  optional = false,,fetch = FetchType.EAGER mappedBy = "vote"
    // @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    //@OnDelete(action = OnUpdateVisitor)
     @NotNull
     @JsonIgnore
     private User user;
