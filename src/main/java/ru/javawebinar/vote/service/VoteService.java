@@ -25,6 +25,7 @@ import java.util.Set;
 import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
+//@Transactional
 public class VoteService {
 
     private final VoteRepo repo;
@@ -54,25 +55,25 @@ public class VoteService {
         //throw new NotFoundException("Not found entity with " + msg);   return checkNotFoundWithId(
     }
 
-    @Transactional
+
     public Vote create(Vote vote, int restoran_id) {
         repoRes.sumVoteIncrement(restoran_id);
         return repo.save(new Vote(vote.getUser(), restoran_id));
     }
 
-    @Transactional
+    //@Transactional
     public Vote update(Vote vote, int restoran_id) {
         repoRes.sumVoteDecrement(vote.getRestoran());
         repoRes.sumVoteIncrement(restoran_id);
         return repo.save(new Vote(vote.getUser(), restoran_id));
     }
 
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+   // @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void savUs(User user){
         repoUser.save(user);
     }
 
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+   // @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public User getUser(int id){
         return repoUser.getById(id);
     }
@@ -80,16 +81,17 @@ public class VoteService {
    // @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Vote createOrUpdate(int user_id, int restoran_id) {//,User user
         //Assert.notNull(user, "user must not be null");
+
         User user=getUser(user_id);
         Vote newVote=voteIf(user.getVote(),restoran_id);
         if (newVote!=null){
+            repoUser.changeVote(newVote.getId(),user_id);//,user.getId()
             user.setVote(newVote);
             savUs(user);
             return newVote;
         }
         return null;
     }
-
 
     public Vote voteIf(Vote createdVote,int restoran_id){
         if (createdVote != null) {
