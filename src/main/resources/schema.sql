@@ -14,7 +14,7 @@ CREATE TABLE users
     password   VARCHAR(255)                      NOT NULL,
     registered TIMESTAMP           DEFAULT NOW() NOT NULL,
     enabled    BOOLEAN             DEFAULT TRUE  NOT NULL,
-    vote_id    INTEGER             DEFAULT 0     NOT NULL
+    vote_id    INTEGER             DEFAULT NULL
 
 );
 CREATE UNIQUE INDEX users_unique_name_password_idx
