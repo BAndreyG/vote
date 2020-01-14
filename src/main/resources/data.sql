@@ -6,9 +6,9 @@ DELETE FROM VOTES;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password,vote_id) VALUES
-  ('User', 'user@yandex.ru', '$2a$10$8E9T8IrsfJllvBHDhsFR4Ovv6I6NsjKqbNss7LvTziVZwAvMKpuSW',0),
-  ('Admin', 'admin@gmail.com', '$2a$10$DIweDRnnDQ43mtxsgbwfq.WjhOpYRZ39BKGBc8zso5mpEhATV.jZe',100013),
-  ('Cook', 'cook@gmail.com', '$2a$10$Ep78NcvgFIBd4HbnRQrkb.L0lYfeist9Q.erk.lGdgCQWnKiJNyZi',0);
+  ('User', 'user@yandex.ru', '$2a$10$8E9T8IrsfJllvBHDhsFR4Ovv6I6NsjKqbNss7LvTziVZwAvMKpuSW',null),
+  ('Admin', 'admin@gmail.com', '$2a$10$DIweDRnnDQ43mtxsgbwfq.WjhOpYRZ39BKGBc8zso5mpEhATV.jZe',100113),
+  ('Cook', 'cook@gmail.com', '$2a$10$Ep78NcvgFIBd4HbnRQrkb.L0lYfeist9Q.erk.lGdgCQWnKiJNyZi',null);
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
@@ -30,4 +30,4 @@ VALUES ('Манка',10.5,'2015-05-30 10:00:00', 100004),
        ('Админ ужин', 1500,'2015-06-01 21:00:00',  100003);
 
 INSERT INTO votes (ID,REGISTERED,USER_ID,RESTORAN_ID)
-VALUES (100013,'2015-05-30 10:00:00',100001,100004);
+VALUES (100113,'2015-05-30 10:00:00',100001,100004);

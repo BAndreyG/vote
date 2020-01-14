@@ -27,12 +27,8 @@
 #### get Menu Restotan_id 100003
 `curl -s http://127.0.0.1:8080/100003`
 
-#### create Vote
-#tEST
-`curl -s -X POST -d '{"name": "userTest","email":"test@gmail.com","password":"12345678","roles":["ROLE_USER"]}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/100013`
-# ...
-`curl -s -X POST -d '{"dateTime":"2020-01-11T10:00","description":"Created vote","restoran":100003}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/100003`
-
+#### create/update Vote
+`curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/100003`
 
 #### update Vote
 `curl -s -X POST -d '{"dateTime":"2020-01-11T10:30","description":"Update vote","restoran":100004}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/100004`
