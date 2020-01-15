@@ -1,9 +1,3 @@
-До писать curl протестировать его!
-обложить тестами классы
-
-почитать задание! 
-
-
 ### login   user@yandex.ru
 ### pass    pasword
 ### role    user
