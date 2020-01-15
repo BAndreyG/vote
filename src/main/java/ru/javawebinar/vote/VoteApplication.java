@@ -18,8 +18,8 @@ import java.util.Arrays;
 @SpringBootApplication(scanBasePackages = "ru.javawebinar.vote")
 public class VoteApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(VoteApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(VoteApplication.class, args);
+    }
 
 }

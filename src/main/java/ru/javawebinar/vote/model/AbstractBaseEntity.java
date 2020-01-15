@@ -11,14 +11,17 @@ import javax.persistence.*;
 @Access(AccessType.FIELD)
 public abstract class AbstractBaseEntity implements Persistable<Integer> {
     public static final int START_SEQ = 100000;
-
-    protected AbstractBaseEntity() {
-    }
-
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     protected Integer id;
+
+    protected AbstractBaseEntity() {
+    }
+
+    protected AbstractBaseEntity(Integer id) {
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;
@@ -30,10 +33,6 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
 
     public boolean isNew() {
         return this.id == null;
-    }
-
-    protected AbstractBaseEntity(Integer id) {
-        this.id = id;
     }
 
     @Override

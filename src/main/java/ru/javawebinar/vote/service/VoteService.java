@@ -19,12 +19,10 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
 
-import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
-
 @Service
 public class VoteService {
 
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private final VoteRepo repo;
     private final RestoranRepo repoRes;
     private final UserRepo repoUser;
@@ -41,7 +39,7 @@ public class VoteService {
     }
 
     public Set<Menu> get(int id) {
-        return checkNotFoundWithId(repoRes.getMenu(id), id);
+        return repoRes.getMenu(id);
     }
 
     public Vote create(User user, int restoran_id) {
