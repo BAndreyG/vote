@@ -4,12 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.javawebinar.vote.TO.ResTo;
-import ru.javawebinar.vote.TO.VoteTo;
 import ru.javawebinar.vote.model.Menu;
 import ru.javawebinar.vote.model.Restoran;
 import ru.javawebinar.vote.model.User;
@@ -17,8 +12,6 @@ import ru.javawebinar.vote.model.Vote;
 import ru.javawebinar.vote.repository.RestoranRepo;
 import ru.javawebinar.vote.repository.UserRepo;
 import ru.javawebinar.vote.repository.VoteRepo;
-import ru.javawebinar.vote.util.UserUtil;
-import ru.javawebinar.vote.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,11 +24,10 @@ import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class VoteService {
 
+    protected final Logger log = LoggerFactory.getLogger(getClass());
     private final VoteRepo repo;
     private final RestoranRepo repoRes;
     private final UserRepo repoUser;
-
-    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public VoteService(VoteRepo repo, RestoranRepo repoRes, UserRepo repoUser) {
@@ -49,75 +41,50 @@ public class VoteService {
     }
 
     public Set<Menu> get(int id) {
-        return checkNotFoundWithId(repoRes.getMenu(id),id);/*
-        if (repoRes.existsById(id)){
-            repoRes.getMenu(id);
-        }*/
-       // return  null;
-//        throw new NotFoundException("Restoran " + id + " is not found");
-        //throw new NotFoundException("Not found entity with " + msg);   return checkNotFoundWithId(
+        return checkNotFoundWithId(repoRes.getMenu(id), id);
     }
-
 
     public Vote create(User user, int restoran_id) {
         repoRes.sumVoteIncrement(restoran_id);
-        return repo.saveAndFlush(new Vote(user, restoran_id));//repo.saveAndFlush(new Vote(vote.getUser(), restoran_id));
+        return repo.saveAndFlush(new Vote(user, restoran_id));
     }
 
-    //@Transactional
     public Vote update(Vote vote, int restoran_id) {
         repoRes.sumVoteDecrement(vote.getRestoran());
         repoRes.sumVoteIncrement(restoran_id);
-        return repo.saveAndFlush(new Vote(vote.getUser(), restoran_id));//repo.saveAndFlush(new Vote(vote.getUser(), restoran_id));
+        return repo.saveAndFlush(new Vote(vote.getUser(), restoran_id));
     }
 
-   // @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public void savUs(User user){
-        repoUser.saveAndFlush(user);
-    }
-
-   // @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public User getUser(int id){
-        return repoUser.getById(id);
-    }
-
-   // @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Vote createOrUpdate(int user_id, int restoran_id) {//,User user
-        //Assert.notNull(user, "user must not be null");
-
-        User user=getUser(user_id);
-        Vote newVote=voteIf(user,restoran_id);
-        if (newVote!=null){
+    public Vote createOrUpdate(User user, int restoran_id) {
+        Vote newVote = voteIf(user, restoran_id);
+        if (newVote != null) {
             user.setVote(newVote);
             repoUser.saveAndFlush(user);
-            repoUser.changeVote(newVote.getId(),user_id);//,user.getId()
-            //user.setVote(newVote);
-            //savUs(user);
+            repoUser.changeVote(newVote.getId(), user.getId());
             System.out.println(newVote.getUser());
             return newVote;
         }
         return null;
     }
 
-    public Vote voteIf(User user,int restoran_id){
-        Vote createdVote=user.getVote();
+    public Vote voteIf(User user, int restoran_id) {
+        Vote createdVote = user.getVote();
         if (createdVote != null) {
             System.out.println(createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()));
             if (createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) == 0) {
-                if (LocalTime.now().isAfter(LocalTime.of(11, 00))){
-                    if (createdVote.getRestoran()==restoran_id){
+                if (LocalTime.now().isAfter(LocalTime.of(11, 00))) {
+                    if (createdVote.getRestoran() == restoran_id) {
                         log.info("Нельзя накручивать счётчик!");
                         return null;
                     }
                     return update(createdVote, restoran_id);
                 }
-            }else if (createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) < 0){
+            } else if (createdVote.getRegistered().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().compareTo(LocalDate.now()) < 0) {
                 return create(user, restoran_id);
             }
             log.info("Голосовать уже поздно");
             return null;
         }
-        //createdVote.setUser(user);
         return create(user, restoran_id);
     }
 }
