@@ -149,4 +149,18 @@ public class User extends AbstractBaseEntity {
     public void setVote(Vote vote) {
         this.vote = vote;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password=XXX'"+
+                ", registered=" + registered +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
+                ", vote=" + vote +
+                ", id=" + id +
+                '}';
+    }
 }
