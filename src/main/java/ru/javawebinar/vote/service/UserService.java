@@ -1,7 +1,6 @@
 package ru.javawebinar.vote.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.data.domain.Sort;
@@ -19,17 +18,14 @@ import java.util.List;
 
 @Service
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class UserService implements UserDetailsService {  //
+public class UserService implements UserDetailsService {
 
     private final UserRepo repository;
     private final PasswordEncoder passwordEncoder;
 
-    /*@Autowired ///
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-*/
     @Autowired
-    public UserService(UserRepo repository, PasswordEncoder passwordEncoder) {//     public UserService(UserRepo repository) {//,PasswordEncoder passwordEncoder
-        this.passwordEncoder=passwordEncoder;
+    public UserService(UserRepo repository, PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
         this.repository = repository;
     }
 
@@ -37,13 +33,13 @@ public class UserService implements UserDetailsService {  //
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 
     public void delete(int id) {
-        if (repository.existsById(id)){
-        repository.deleteById(id);}
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        }
     }
 
     public User get(int id) {
@@ -55,16 +51,14 @@ public class UserService implements UserDetailsService {  //
     }
 
     @Transactional
-    public void update(User user,int id) {
+    public void update(User user, int id) {
         Assert.notNull(user, "user must not be null");
-        User userUpdate=new User(get(id));
+        User userUpdate = new User(get(id));
         userUpdate.setName(user.getName());
         userUpdate.setPassword(user.getPassword());
         userUpdate.setEmail(user.getEmail());
         userUpdate.setRoles(user.getRoles());
-
         user.setPassword(passwordEncoder.encode(userUpdate.getPassword()));
-      //  user.setPassword(bCryptPasswordEncoder.encode(userUpdate.getPassword()));
         repository.save(userUpdate);
     }
 

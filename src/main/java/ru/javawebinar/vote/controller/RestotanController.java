@@ -12,20 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.vote.model.Menu;
 import ru.javawebinar.vote.model.Restoran;
-import ru.javawebinar.vote.model.User;
 import ru.javawebinar.vote.repository.RestoranRepo;
 import ru.javawebinar.vote.service.RestoranService;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
-import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
-
 @RestController
 @PreAuthorize("hasRole('ADMIN')")
-@RequestMapping(value =RestotanController.REST_URL,produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = RestotanController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestotanController {
 
     static final String REST_URL = "/api/v1/restorans";
@@ -49,13 +45,6 @@ public class RestotanController {
         log.info("get {} restoran_id = ", id);
         return service.get(id);
     }
-    /*@PostMapping
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<String> createOrUpdate(@Valid Restoran restoran){
-        if (restoran.isNew()) service.create(restoran);
-        else service.update(restoran);
-        return ResponseEntity.ok().build();
-    }*/
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

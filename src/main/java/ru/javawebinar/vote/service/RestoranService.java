@@ -10,8 +10,6 @@ import ru.javawebinar.vote.repository.RestoranRepo;
 
 import java.util.Set;
 
-import static ru.javawebinar.vote.util.ValidationUtil.checkNotFoundWithId;
-
 @Service
 public class RestoranService {
 
@@ -23,18 +21,17 @@ public class RestoranService {
     }
 
     public Set<Menu> get(int id) {
-        if (repository.existsById(id)){
-            return checkNotFoundWithId(repository.getMenu(id),id);
-        }
-        else System.out.println("error");
+        if (repository.existsById(id)) {
+            return repository.getMenu(id);
+        } else System.out.println("error");
         return null;
 
     }
 
     @Transactional
-    public void update(Restoran restoran,int id) {
+    public void update(Restoran restoran, int id) {
         Assert.notNull(restoran, "restoran must not be null");
-        Restoran createdRestoran=new Restoran(repository.findById(id));
+        Restoran createdRestoran = new Restoran(repository.findById(id));
         createdRestoran.setName(restoran.getName());
         repository.save(new Restoran(createdRestoran));
     }
@@ -45,7 +42,8 @@ public class RestoranService {
     }
 
     public void delete(int id) {
-        if (repository.existsById(id)){
-      repository.deleteById(id);}
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        }
     }
 }
